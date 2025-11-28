@@ -89,10 +89,12 @@ nav {
   left: auto;
   right: auto;
   width: auto;
-  z-index: auto;
+  z-index: 1;
   flex: 1;
   display: flex;
   justify-content: flex-end;
+  transform: translateY(-4rem);
+  margin-bottom: -4rem;
 }
 
 .nav-container {
@@ -1176,7 +1178,7 @@ footer p {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 0.5rem;
   }
-  
+
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
