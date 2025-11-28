@@ -86,14 +86,13 @@ nav {
   padding: 0;
   position: relative;
   top: auto;
-  left: auto;
-  right: auto;
-  width: auto;
+  width: 50%;
+  left: 50%;
   z-index: 1;
   flex: 1;
   display: flex;
   justify-content: flex-end;
-  transform: translateY(-4rem);
+  transform: translateY(-4rem) translateX(-50%);
   margin-bottom: -4rem;
 }
 
