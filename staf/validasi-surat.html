@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validasi Surat - Smart Health Center Service</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    .letter-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    .letter-card:hover {
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .letter-card.pending {
+      border-left: 4px solid #f57c00;
+      background: #fff3cd;
+    }
+    .letter-card.approved {
+      border-left: 4px solid #4caf50;
+      background: #e8f5e9;
+    }
+    .letter-card.rejected {
+      border-left: 4px solid #d32f2f;
+      background: #ffebee;
+    }
+    .letter-preview {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+      margin: 1rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .validation-form {
+      background: #f5f5f5;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+    .attachment-list {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .attachment-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .attachment-item:hover {
+      background: #e3f2fd;
+      border-color: #1976d2;
+    }
+    .pdf-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 9999;
+      overflow: auto;
+    }
+    .pdf-modal-content {
+      background: #fff;
+      margin: 2% auto;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .pdf-modal-header {
+      background: linear-gradient(135deg, #7b1fa2, #4a148c);
+      color: #fff;
+      padding: 1.5rem;
+      border-radius: 8px 8px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .pdf-modal-body {
+      padding: 2rem;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+    .pdf-preview {
+      border: 1px solid #e0e0e0;
+      padding: 2rem;
+      background: #fff;
+      font-family: 'Times New Roman', serif;
+      line-height: 1.8;
+    }
+    .close-modal {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      transition: all 0.3s;
+    }
+    .close-modal:hover {
+      background: rgba(255,255,255,0.2);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+        <img src="../img/Smarthealth-Logo.png" alt="Smart Health Logo" style="height: 45px;">
+        <p style="font-size: 0.75rem; margin: 0; color: #5f7a95;">Layanan Digital Puskesmas - Portal Staf</p>
+      </div>
+      <nav>
+        <div class="nav-container">
+          <div class="nav-breadcrumb">
+            <a href="dashboard.html">🏠 Dashboard</a>
+            <span class="separator">›</span>
+            <span class="current-page">✅ Validasi Surat</span>
+          </div>
+          <div class="nav-actions">
+            <div class="nav-dropdown">
+              <button class="dropdown-toggle">📋 Menu ▼</button>
+              <div class="dropdown-menu">
+                <a href="daftar-antrean.html">📋 Daftar Antrean</a>
+                <a href="kelola-antrean.html">⚙️ Kelola Antrean</a>
+                <a href="hasil-pemeriksaan.html">📝 Hasil Pemeriksaan</a>
+              </div>
+            </div>
+            <div class="nav-dropdown">
+              <button class="dropdown-toggle">👨‍⚕️ Akun ▼</button>
+              <div class="dropdown-menu">
+                <a href="../logout.html" style="color: #d32f2f; font-weight: 700;">🚪 Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <h2>✅ Validasi Permohonan Surat Keterangan</h2>
+      <p>Proses validasi dan approval surat dari pasien</p>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="stats-grid">
+      <div class="stat-card warning">
+        <h3>12</h3>
+        <p>Menunggu Validasi</p>
+      </div>
+      <div class="stat-card success">
+        <h3>45</h3>
+        <p>Disetujui (Bulan Ini)</p>
+      </div>
+      <div class="stat-card danger">
+        <h3>3</h3>
+        <p>Ditolak (Bulan Ini)</p>
+      </div>
+      <div class="stat-card info">
+        <h3>2.5 jam</h3>
+        <p>Rata-rata Waktu Proses</p>
+      </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="card">
+      <h3>🔍 Filter Permohonan</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="filterStatus">Status</label>
+          <select id="filterStatus" onchange="filterLetters()">
+            <option value="pending" selected>Menunggu Validasi</option>
+            <option value="approved">Disetujui</option>
+            <option value="rejected">Ditolak</option>
+            <option value="all">Semua</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="filterType">Jenis Surat</label>
+          <select id="filterType" onchange="filterLetters()">
+            <option value="">Semua Jenis</option>
+            <option value="sakit">Surat Sakit</option>
+            <option value="sehat">Surat Sehat</option>
+            <option value="keterangan">Surat Keterangan Medis</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="filterDate">Tanggal Pengajuan</label>
+          <input type="date" id="filterDate" onchange="filterLetters()">
+        </div>
+        <div class="form-group">
+          <label for="searchPatient">Cari Pasien</label>
+          <input type="text" id="searchPatient" placeholder="Nama pasien..." onkeyup="filterLetters()">
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Letters -->
+    <div class="card">
+      <h3 style="color: #f57c00;">⏳ Permohonan Menunggu Validasi (2)</h3>
+      
+      <!-- Letter 1 -->
+      <div class="letter-card pending" data-status="pending" data-type="sakit" data-patient="Ahmad Ridwan">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0; color: #333;">📄 Surat Keterangan Sakit</h4>
+            <p style="margin: 0; color: #666;">ID Permohonan: <strong>SKS-2025-001234</strong></p>
+          </div>
+          <span class="badge badge-warning">Menunggu Validasi</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0; padding: 1rem; background: #fff; border-radius: 6px;">
+          <div>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Pasien</p>
+            <p style="margin: 0.25rem 0 0 0; font-weight: 600;">Ahmad Ridwan</p>
+            <p style="margin: 0; font-size: 0.9rem; color: #666;">NIK: 3201012345678901</p>
+          </div>
+          <div>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Tanggal Pengajuan</p>
+            <p style="margin: 0.25rem 0 0 0; font-weight: 600;">27 November 2025, 09:30 WIB</p>
+          </div>
+          <div>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Durasi Sakit</p>
+            <p style="margin: 0.25rem 0 0 0; font-weight: 600;">3 hari</p>
+            <p style="margin: 0; font-size: 0.9rem; color: #666;">27-29 Nov 2025</p>
+          </div>
+          <div>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Keperluan</p>
+            <p style="margin: 0.25rem 0 0 0; font-weight: 600;">Izin Kerja/Sekolah</p>
+          </div>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <p style="margin: 0 0 0.5rem 0; font-weight: 600;">📋 Diagnosis:</p>
+          <p style="margin: 0; padding: 0.75rem; background: #fff; border-radius: 6px;">Infeksi Saluran Pernapasan Atas (ISPA)</p>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <p style="margin: 0 0 0.5rem 0; font-weight: 600;">📎 Dokumen Pendukung:</p>
+          <div class="attachment-list">
+            <div class="attachment-item" onclick="viewAttachment('hasil-lab-001.pdf')">
+              <span>📄</span>
+              <span>hasil-lab-001.pdf</span>
+              <span style="color: #666; font-size: 0.8rem;">(245 KB)</span>
+            </div>
+            <div class="attachment-item" onclick="viewAttachment('foto-resep.jpg')">
+              <span>🖼️</span>
+              <span>foto-resep.jpg</span>
+              <span style="color: #666; font-size: 0.8rem;">(128 KB)</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <p style="margin: 0 0 0.5rem 0; font-weight: 600;">👁️ Preview Surat:</p>
+          <div class="letter-preview">
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+              <h4 style="margin: 0;">SURAT KETERANGAN SAKIT</h4>
+              <p style="margin: 0.25rem 0;">No: SKS-2025-001234</p>
+            </div>
+            <p>Yang bertanda tangan di bawah ini, menerangkan bahwa:</p>
+            <table style="margin: 1rem 0; border: none;">
+              <tr>
+                <td style="padding: 0.25rem 1rem 0.25rem 0; border: none;">Nama</td>
+                <td style="padding: 0.25rem; border: none;">: Ahmad Ridwan</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.25rem 1rem 0.25rem 0; border: none;">NIK</td>
+                <td style="padding: 0.25rem; border: none;">: 3201012345678901</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.25rem 1rem 0.25rem 0; border: none;">Umur</td>
+                <td style="padding: 0.25rem; border: none;">: 42 tahun</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.25rem 1rem 0.25rem 0; border: none;">Alamat</td>
+                <td style="padding: 0.25rem; border: none;">: Jl. Merdeka No. 123, Jakarta</td>
+              </tr>
+            </table>
+            <p>Adalah benar pasien tersebut sedang dalam perawatan/pengobatan kami dengan diagnosis:</p>
+            <p style="margin: 0.5rem 0; padding: 0.75rem; background: #f5f5f5; border-left: 3px solid #00796b;"><strong>Infeksi Saluran Pernapasan Atas (ISPA)</strong></p>
+            <p>Oleh karena itu, pasien tersebut memerlukan istirahat selama <strong>3 (tiga) hari</strong>, terhitung mulai tanggal <strong>27 November 2025</strong> sampai dengan <strong>29 November 2025</strong>.</p>
+            <p>Demikian surat keterangan ini dibuat untuk dapat dipergunakan sebagaimana mestinya.</p>
+            <br>
+            <div style="text-align: right; margin-top: 2rem;">
+              <p style="margin: 0;">Jakarta, 27 November 2025</p>
+              <p style="margin: 0;">Dokter Pemeriksa,</p>
+              <br><br><br>
+              <p style="margin: 0;"><strong>dr. Ahmad Fauzi</strong></p>
+              <p style="margin: 0;">SIP: 123456789</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="validation-form">
+          <h4 style="margin: 0 0 1rem 0;">✍️ Validasi Surat</h4>
+          <div class="form-group">
+            <label for="validationNote1">Catatan Validasi (opsional)</label>
+            <textarea id="validationNote1" rows="3" placeholder="Tambahkan catatan jika diperlukan..."></textarea>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem;">
+            <button class="btn btn-primary" style="background: #1976d2;" onclick="previewLetterPDF('SKS-2025-001234', 'sakit')">👁️ Preview PDF</button>
+            <button class="btn btn-success" onclick="approveLetter('SKS-2025-001234')">✅ Setujui & Cetak</button>
+            <button class="btn btn-danger" onclick="rejectLetter('SKS-2025-001234')">❌ Tolak</button>
+            <button class="btn btn-warning" onclick="requestRevision('SKS-2025-001234')">🔄 Minta Revisi</button>
+            <button class="btn btn-secondary" onclick="saveDraft('SKS-2025-001234')">💾 Simpan Draft</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Letter 2 -->
+      <div class="letter-card pending" data-status="pending" data-type="sehat" data-patient="Siti Aminah">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0; color: #333;">📄 Surat Keterangan Sehat</h4>
+            <p style="margin: 0; color: #666;">ID Permohonan: <strong>SKS-2025-001235</strong></p>
+          </div>
+          <span class="badge badge-warning">Menunggu Validasi</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0; padding: 1rem; background: #fff; border-radius: 6px;">
+          <div>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Pasien</p>
+            <p style="margin: 0.25rem 0 0 0; font-weight: 600;">Siti Aminah</p>
+            <p style="margin: 0; font-size: 0.9rem; color: #666;">NIK: 3201012345678903</p>
+          </div>
+          <div>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Tanggal Pengajuan</p>
+            <p style="margin: 0.25rem 0 0 0; font-weight: 600;">27 November 2025, 08:45 WIB</p>
+          </div>
+          <div>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Keperluan</p>
+            <p style="margin: 0.25rem 0 0 0; font-weight: 600;">Melamar Pekerjaan</p>
+          </div>
+          <div>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Pemeriksaan</p>
+            <p style="margin: 0.25rem 0 0 0; font-weight: 600;">Fisik + Lab Darah</p>
+          </div>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <p style="margin: 0 0 0.5rem 0; font-weight: 600;">🩺 Hasil Pemeriksaan:</p>
+          <div style="background: #fff; padding: 1rem; border-radius: 6px;">
+            <p style="margin: 0.5rem 0;">• Tekanan Darah: 120/80 mmHg (Normal)</p>
+            <p style="margin: 0.5rem 0;">• Tinggi Badan: 160 cm</p>
+            <p style="margin: 0.5rem 0;">• Berat Badan: 55 kg</p>
+            <p style="margin: 0.5rem 0;">• Suhu: 36.5°C</p>
+            <p style="margin: 0.5rem 0;">• Hasil Lab: Dalam batas normal</p>
+          </div>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <p style="margin: 0 0 0.5rem 0; font-weight: 600;">📎 Dokumen Pendukung:</p>
+          <div class="attachment-list">
+            <div class="attachment-item" onclick="viewAttachment('hasil-lab-002.pdf')">
+              <span>📄</span>
+              <span>hasil-lab-002.pdf</span>
+              <span style="color: #666; font-size: 0.8rem;">(312 KB)</span>
+            </div>
+            <div class="attachment-item" onclick="viewAttachment('xray-paru.jpg')">
+              <span>🖼️</span>
+              <span>xray-paru.jpg</span>
+              <span style="color: #666; font-size: 0.8rem;">(567 KB)</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 1rem;">
+          <button class="btn btn-secondary" onclick="togglePreview(this)">👁️ Tampilkan Preview Surat</button>
+        </div>
+
+        <div class="validation-form" style="margin-top: 1rem;">
+          <h4 style="margin: 0 0 1rem 0;">✍️ Validasi Surat</h4>
+          <div class="form-group">
+            <label for="validationNote2">Catatan Validasi (opsional)</label>
+            <textarea id="validationNote2" rows="3" placeholder="Tambahkan catatan jika diperlukan..."></textarea>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem;">
+            <button class="btn btn-primary" style="background: #1976d2;" onclick="previewLetterPDF('SKS-2025-001235', 'sehat')">👁️ Preview PDF</button>
+            <button class="btn btn-success" onclick="approveLetter('SKS-2025-001235')">✅ Setujui & Cetak</button>
+            <button class="btn btn-danger" onclick="rejectLetter('SKS-2025-001235')">❌ Tolak</button>
+            <button class="btn btn-warning" onclick="requestRevision('SKS-2025-001235')">🔄 Minta Revisi</button>
+            <button class="btn btn-secondary" onclick="saveDraft('SKS-2025-001235')">💾 Simpan Draft</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div class="card">
+      <h3>📜 Riwayat Validasi (5 Terakhir)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID Permohonan</th>
+            <th>Pasien</th>
+            <th>Jenis Surat</th>
+            <th>Tanggal Validasi</th>
+            <th>Status</th>
+            <th>Validator</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SKS-2025-001233</td>
+            <td>Dewi Lestari</td>
+            <td>Surat Sakit</td>
+            <td>27 Nov 2025, 08:30</td>
+            <td><span class="badge badge-success">Disetujui</span></td>
+            <td>Sri Wahyuni</td>
+            <td><button class="btn btn-secondary" style="padding: 0.5rem 1rem;">Detail</button></td>
+          </tr>
+          <tr>
+            <td>SKS-2025-001232</td>
+            <td>Budi Santoso</td>
+            <td>Surat Keterangan</td>
+            <td>26 Nov 2025, 16:45</td>
+            <td><span class="badge badge-success">Disetujui</span></td>
+            <td>Sri Wahyuni</td>
+            <td><button class="btn btn-secondary" style="padding: 0.5rem 1rem;">Detail</button></td>
+          </tr>
+          <tr>
+            <td>SKS-2025-001231</td>
+            <td>Ratna Sari</td>
+            <td>Surat Sehat</td>
+            <td>26 Nov 2025, 14:20</td>
+            <td><span class="badge badge-danger">Ditolak</span></td>
+            <td>Sri Wahyuni</td>
+            <td><button class="btn btn-secondary" style="padding: 0.5rem 1rem;">Detail</button></td>
+          </tr>
+          <tr>
+            <td>SKS-2025-001230</td>
+            <td>Hasan Basri</td>
+            <td>Surat Sakit</td>
+            <td>26 Nov 2025, 10:15</td>
+            <td><span class="badge badge-success">Disetujui</span></td>
+            <td>Sri Wahyuni</td>
+            <td><button class="btn btn-secondary" style="padding: 0.5rem 1rem;">Detail</button></td>
+          </tr>
+          <tr>
+            <td>SKS-2025-001229</td>
+            <td>Rina Wijaya</td>
+            <td>Surat Keterangan</td>
+            <td>25 Nov 2025, 15:30</td>
+            <td><span class="badge badge-success">Disetujui</span></td>
+            <td>Sri Wahyuni</td>
+            <td><button class="btn btn-secondary" style="padding: 0.5rem 1rem;">Detail</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-secondary" style="margin-top: 1rem; width: 100%;">Lihat Semua Riwayat</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Smart Health Center Service. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function filterLetters() {
+      const status = document.getElementById('filterStatus').value;
+      const type = document.getElementById('filterType').value;
+      const search = document.getElementById('searchPatient').value.toLowerCase();
+      
+      const cards = document.querySelectorAll('.letter-card');
+      
+      cards.forEach(card => {
+        const cardStatus = card.getAttribute('data-status');
+        const cardType = card.getAttribute('data-type');
+        const cardPatient = card.getAttribute('data-patient').toLowerCase();
+        
+        let show = true;
+        
+        if (status !== 'all' && cardStatus !== status) show = false;
+        if (type && cardType !== type) show = false;
+        if (search && !cardPatient.includes(search)) show = false;
+        
+        card.style.display = show ? '' : 'none';
+      });
+    }
+
+    function viewAttachment(filename) {
+      alert('📎 Membuka file: ' + filename + '\n\n[Dalam implementasi nyata, file akan dibuka di tab baru atau modal viewer]');
+    }
+
+    function togglePreview(button) {
+      alert('👁️ Preview surat akan ditampilkan\n\n[Fungsi toggle preview untuk menampilkan/menyembunyikan isi surat]');
+    }
+
+    function approveLetter(id) {
+      if (confirm('✅ Setujui permohonan surat ' + id + '?\n\nSurat akan dicetak dan dikirim ke pasien.')) {
+        alert('✅ Surat ' + id + ' disetujui!\n\n📄 Membuka halaman cetak surat...');
+        // In real app: window.open('cetak-surat.html?id=' + id, '_blank');
+        location.reload();
+      }
+    }
+
+    function rejectLetter(id) {
+      const note = prompt('❌ Tolak permohonan surat ' + id + '\n\nMasukkan alasan penolakan:');
+      if (note) {
+        alert('❌ Surat ' + id + ' ditolak.\n\nAlasan: ' + note + '\n\nNotifikasi telah dikirim ke pasien.');
+        location.reload();
+      }
+    }
+
+    function requestRevision(id) {
+      const note = prompt('🔄 Minta revisi untuk surat ' + id + '\n\nMasukkan catatan revisi yang diperlukan:');
+      if (note) {
+        alert('🔄 Permintaan revisi dikirim.\n\nCatatan: ' + note + '\n\nPasien akan menerima notifikasi.');
+        location.reload();
+      }
+    }
+
+    function saveDraft(id) {
+      alert('💾 Draft validasi ' + id + ' disimpan.\n\nAnda dapat melanjutkan validasi nanti.');
+    }
+
+    // Auto refresh
+    setInterval(() => {
+      console.log('Checking for new letter requests...');
+    }, 60000);
+  </script>
+
+  <!-- Modal Preview PDF -->
+  <div id="pdfModal" class="pdf-modal">
+    <div class="pdf-modal-content">
+      <div class="pdf-modal-header">
+        <h3 id="pdfTitle">Preview Surat</h3>
+        <button class="close-modal" onclick="closePdfModal()">&times;</button>
+      </div>
+      <div class="pdf-modal-body">
+        <div id="pdfPreview" class="pdf-preview"></div>
+        <div style="text-align: center; margin-top: 2rem;">
+          <button class="btn btn-primary" onclick="downloadCurrentPdf()" style="padding: 0.75rem 2rem; background: #7b1fa2;">
+            📥 Download PDF
+          </button>
+          <button class="btn btn-secondary" onclick="closePdfModal()" style="padding: 0.75rem 2rem;">
+            ❌ Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { jsPDF } = window.jspdf;
+    let currentPdfDoc = null;
+    let currentPdfName = '';
+
+    // Data surat untuk preview
+    const suratData = {
+      'SKS-2025-001234': {
+        jenis: 'Surat Keterangan Sakit',
+        pasien: {
+          nama: 'Ahmad Ridwan',
+          nik: '3201012345678901',
+          ttl: 'Bandung, 15 Januari 1990',
+          alamat: 'Jl. Merdeka No. 123, Jakarta',
+          pekerjaan: 'Karyawan Swasta'
+        },
+        diagnosis: 'Infeksi Saluran Pernapasan Atas (ISPA)',
+        lamaSakit: '3 hari',
+        mulai: '27 November 2025',
+        selesai: '29 November 2025',
+        keperluan: 'Izin Tidak Masuk Kerja',
+        ditujukan: 'PT. XYZ Teknologi Indonesia',
+        dokter: 'dr. Ahmad Fauzi',
+        sip: 'SIP.456/DINKES/2020'
+      },
+      'SKS-2025-001235': {
+        jenis: 'Surat Keterangan Sehat',
+        pasien: {
+          nama: 'Siti Aminah',
+          nik: '3201012345678903',
+          ttl: 'Jakarta, 20 Maret 1988',
+          alamat: 'Jl. Sudirman No. 45, Jakarta',
+          pekerjaan: 'Wiraswasta'
+        },
+        pemeriksaan: {
+          tensiDarah: '120/80 mmHg',
+          nadi: '75 x/menit',
+          suhu: '36.5°C',
+          beratBadan: '55 kg',
+          tinggiBadan: '160 cm'
+        },
+        hasil: 'Berdasarkan hasil pemeriksaan fisik dan laboratorium, yang bersangkutan dalam keadaan SEHAT dan tidak ditemukan kelainan fisik maupun penyakit.',
+        keperluan: 'Lamaran Kerja - PT. Sejahtera Indonesia',
+        dokter: 'dr. Budi Santoso',
+        sip: 'SIP.123/DINKES/2020'
+      }
+    };
+
+    function generatePDF(jenis, data) {
+      const doc = new jsPDF();
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const margin = 20;
+      let y = 20;
+
+      // Header
+      doc.setFontSize(16);
+      doc.setFont('helvetica', 'bold');
+      doc.text('PUSKESMAS SMART HEALTH CENTER', pageWidth/2, y, { align: 'center' });
+      y += 7;
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Jl. Kesehatan No. 1, Bandung - Telp. (022) 1234567', pageWidth/2, y, { align: 'center' });
+      y += 3;
+      doc.text('Email: info@smarthealthcenter.id', pageWidth/2, y, { align: 'center' });
+      
+      y += 5;
+      doc.setLineWidth(0.5);
+      doc.line(margin, y, pageWidth - margin, y);
+      
+      y += 15;
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text(jenis.toUpperCase(), pageWidth/2, y, { align: 'center' });
+      
+      y += 5;
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Nomor: ' + data.noSurat, pageWidth/2, y, { align: 'center' });
+      
+      y += 15;
+      doc.setFontSize(11);
+      
+      if (jenis === 'Surat Keterangan Sakit') {
+        doc.text('Yang bertanda tangan di bawah ini, dokter pada Puskesmas Smart Health Center,', margin, y);
+        y += 7;
+        doc.text('menerangkan bahwa:', margin, y);
+        y += 10;
+        doc.text('Nama: ' + data.pasien.nama, margin + 10, y);
+        y += 7;
+        doc.text('NIK: ' + data.pasien.nik, margin + 10, y);
+        y += 7;
+        doc.text('Tempat/Tgl Lahir: ' + data.pasien.ttl, margin + 10, y);
+        y += 7;
+        doc.text('Alamat: ' + data.pasien.alamat, margin + 10, y);
+        y += 12;
+        doc.setFont('helvetica', 'bold');
+        doc.text('Diagnosis:', margin, y);
+        y += 7;
+        doc.setFont('helvetica', 'normal');
+        doc.text(data.diagnosis, margin + 10, y);
+        y += 10;
+        doc.text('Berdasarkan hasil pemeriksaan, pasien tersebut perlu istirahat selama ' + data.lamaSakit, margin, y);
+        y += 7;
+        doc.text('terhitung mulai tanggal ' + data.mulai + ' sampai dengan ' + data.selesai + '.', margin, y);
+        y += 10;
+        doc.text('Keperluan: ' + data.keperluan, margin, y);
+        y += 7;
+        doc.text('Ditujukan kepada: ' + data.ditujukan, margin, y);
+      } else if (jenis === 'Surat Keterangan Sehat') {
+        doc.text('Yang bertanda tangan di bawah ini, dokter pada Puskesmas Smart Health Center,', margin, y);
+        y += 7;
+        doc.text('menerangkan bahwa:', margin, y);
+        y += 10;
+        doc.text('Nama: ' + data.pasien.nama, margin + 10, y);
+        y += 7;
+        doc.text('NIK: ' + data.pasien.nik, margin + 10, y);
+        y += 7;
+        doc.text('Tempat/Tgl Lahir: ' + data.pasien.ttl, margin + 10, y);
+        y += 7;
+        doc.text('Alamat: ' + data.pasien.alamat, margin + 10, y);
+        y += 12;
+        doc.setFont('helvetica', 'bold');
+        doc.text('Hasil Pemeriksaan:', margin, y);
+        y += 7;
+        doc.setFont('helvetica', 'normal');
+        doc.text('Tekanan Darah: ' + data.pemeriksaan.tensiDarah, margin + 10, y);
+        y += 7;
+        doc.text('Nadi: ' + data.pemeriksaan.nadi, margin + 10, y);
+        y += 7;
+        doc.text('Suhu: ' + data.pemeriksaan.suhu, margin + 10, y);
+        y += 7;
+        doc.text('Berat Badan: ' + data.pemeriksaan.beratBadan + ', Tinggi Badan: ' + data.pemeriksaan.tinggiBadan, margin + 10, y);
+        y += 12;
+        const hasilLines = doc.splitTextToSize(data.hasil, pageWidth - 2 * margin);
+        doc.text(hasilLines, margin, y);
+        y += hasilLines.length * 7 + 10;
+        doc.text('Keperluan: ' + data.keperluan, margin, y);
+      }
+      
+      y += 15;
+      const today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+      doc.text('Bandung, ' + today, pageWidth - margin - 50, y);
+      y += 7;
+      doc.text('Dokter Pemeriksa,', pageWidth - margin - 50, y);
+      y += 25;
+      doc.setFont('helvetica', 'bold');
+      doc.text(data.dokter, pageWidth - margin - 50, y);
+      y += 5;
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      doc.text(data.sip, pageWidth - margin - 50, y);
+      
+      return doc;
+    }
+
+    function previewLetterPDF(noSurat, jenis) {
+      const data = suratData[noSurat];
+      if (!data) {
+        alert('Data surat tidak ditemukan!');
+        return;
+      }
+
+      data.noSurat = noSurat;
+      const today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+      
+      let previewHtml = `
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <h2 style="margin: 0;">PUSKESMAS SMART HEALTH CENTER</h2>
+          <p style="margin: 0.5rem 0;">Jl. Kesehatan No. 1, Bandung - Telp. (022) 1234567</p>
+          <p style="margin: 0;">Email: info@smarthealthcenter.id</p>
+          <hr style="border: 1px solid #000; margin: 1rem 0;">
+        </div>
+        
+        <div style="text-align: center; margin: 2rem 0;">
+          <h3 style="margin: 0;">${data.jenis.toUpperCase()}</h3>
+          <p style="margin: 0.5rem 0;">Nomor: ${noSurat}</p>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+      `;
+      
+      if (jenis === 'sakit') {
+        previewHtml += `
+          <p>Yang bertanda tangan di bawah ini, dokter pada Puskesmas Smart Health Center, menerangkan bahwa:</p>
+          <table style="margin: 1rem 0; width: 100%;">
+            <tr><td width="150">Nama</td><td>: ${data.pasien.nama}</td></tr>
+            <tr><td>NIK</td><td>: ${data.pasien.nik}</td></tr>
+            <tr><td>Tempat/Tgl. Lahir</td><td>: ${data.pasien.ttl}</td></tr>
+            <tr><td>Alamat</td><td>: ${data.pasien.alamat}</td></tr>
+            <tr><td>Pekerjaan</td><td>: ${data.pasien.pekerjaan}</td></tr>
+          </table>
+          <h4>Diagnosis:</h4>
+          <p>${data.diagnosis}</p>
+          <p>Berdasarkan hasil pemeriksaan, pasien tersebut perlu istirahat selama <strong>${data.lamaSakit}</strong> terhitung mulai tanggal <strong>${data.mulai}</strong> sampai dengan <strong>${data.selesai}</strong>.</p>
+          <p><strong>Keperluan:</strong> ${data.keperluan}</p>
+          <p><strong>Ditujukan kepada:</strong> ${data.ditujukan}</p>
+        `;
+      } else if (jenis === 'sehat') {
+        previewHtml += `
+          <p>Yang bertanda tangan di bawah ini, dokter pada Puskesmas Smart Health Center, menerangkan bahwa:</p>
+          <table style="margin: 1rem 0; width: 100%;">
+            <tr><td width="150">Nama</td><td>: ${data.pasien.nama}</td></tr>
+            <tr><td>NIK</td><td>: ${data.pasien.nik}</td></tr>
+            <tr><td>Tempat/Tgl. Lahir</td><td>: ${data.pasien.ttl}</td></tr>
+            <tr><td>Alamat</td><td>: ${data.pasien.alamat}</td></tr>
+            <tr><td>Pekerjaan</td><td>: ${data.pasien.pekerjaan}</td></tr>
+          </table>
+          <h4>Hasil Pemeriksaan:</h4>
+          <table style="margin: 1rem 0; width: 100%;">
+            <tr><td width="150">Tekanan Darah</td><td>: ${data.pemeriksaan.tensiDarah}</td></tr>
+            <tr><td>Nadi</td><td>: ${data.pemeriksaan.nadi}</td></tr>
+            <tr><td>Suhu</td><td>: ${data.pemeriksaan.suhu}</td></tr>
+            <tr><td>Berat Badan</td><td>: ${data.pemeriksaan.beratBadan}</td></tr>
+            <tr><td>Tinggi Badan</td><td>: ${data.pemeriksaan.tinggiBadan}</td></tr>
+          </table>
+          <h4>Kesimpulan:</h4>
+          <p>${data.hasil}</p>
+          <p><strong>Keperluan:</strong> ${data.keperluan}</p>
+        `;
+      }
+      
+      previewHtml += `
+          <div style="text-align: right; margin-top: 3rem;">
+            <p>Bandung, ${today}</p>
+            <p>Dokter Pemeriksa,</p>
+            <br><br><br>
+            <p><strong>${data.dokter}</strong></p>
+            <p>${data.sip}</p>
+          </div>
+        </div>
+      `;
+      
+      currentPdfDoc = generatePDF(data.jenis, data);
+      currentPdfName = noSurat.replace(/\//g, '-') + '.pdf';
+      
+      document.getElementById('pdfTitle').textContent = data.jenis + ' - Preview';
+      document.getElementById('pdfPreview').innerHTML = previewHtml;
+      document.getElementById('pdfModal').style.display = 'block';
+    }
+
+    function viewAttachment(fileName) {
+      if (fileName.endsWith('.pdf')) {
+        window.open('#', '_blank');
+        alert('📄 Membuka: ' + fileName);
+      }
+    }
+
+    function downloadCurrentPdf() {
+      if (currentPdfDoc) {
+        currentPdfDoc.save(currentPdfName);
+        alert('✅ PDF berhasil diunduh!');
+      }
+    }
+
+    function closePdfModal() {
+      document.getElementById('pdfModal').style.display = 'none';
+      currentPdfDoc = null;
+      currentPdfName = '';
+    }
+
+    window.onclick = function(event) {
+      if (event.target.id === 'pdfModal') {
+        closePdfModal();
+      }
+    }
+
+    function filterLetters() {
+      console.log('Filtering letters...');
+    }
+
+    function approveLetter(id) {
+      if (confirm('✅ Setujui dan cetak surat ' + id + '?\n\nSurat akan diterbitkan dan dapat diunduh oleh pasien.')) {
+        alert('✅ Surat ' + id + ' telah disetujui!\n\nSurat telah diterbitkan dan pasien akan menerima notifikasi.');
+        location.reload();
+      }
+    }
+
+    function rejectLetter(id) {
+      const reason = prompt('❌ Tolak permohonan surat ' + id + '\n\nMasukkan alasan penolakan:');
+      if (reason) {
+        alert('❌ Permohonan ditolak.\n\nAlasan: ' + reason + '\n\nPasien akan menerima notifikasi.');
+        location.reload();
+      }
+    }
+
+    function requestRevision(id) {
+      const note = prompt('🔄 Minta revisi untuk surat ' + id + '\n\nMasukkan catatan revisi yang diperlukan:');
+      if (note) {
+        alert('🔄 Permintaan revisi dikirim.\n\nCatatan: ' + note + '\n\nPasien akan menerima notifikasi.');
+        location.reload();
+      }
+    }
+
+    function saveDraft(id) {
+      alert('💾 Draft validasi ' + id + ' disimpan.\n\nAnda dapat melanjutkan validasi nanti.');
+    }
+
+    function togglePreview(btn) {
+      const preview = btn.nextElementSibling;
+      if (preview && preview.classList.contains('letter-preview')) {
+        if (preview.style.display === 'none') {
+          preview.style.display = 'block';
+          btn.textContent = '🙈 Sembunyikan Preview Surat';
+        } else {
+          preview.style.display = 'none';
+          btn.textContent = '👁️ Tampilkan Preview Surat';
+        }
+      }
+    }
+
+    // Auto refresh
+    setInterval(() => {
+      console.log('Checking for new letter requests...');
+    }, 60000);
+  </script>
+</body>
+</html>

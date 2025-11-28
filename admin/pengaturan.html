@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengaturan Sistem - Smart Health Center Service</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .setting-section {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .setting-item:last-child {
+      border-bottom: none;
+    }
+    .toggle-switch {
+      position: relative;
+      width: 60px;
+      height: 30px;
+      background: #ccc;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .toggle-switch.active {
+      background: #00796b;
+    }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 24px;
+      height: 24px;
+      background: #fff;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+    .toggle-switch.active::after {
+      left: 33px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+        <img src="../img/Smarthealth-Logo.png" alt="Smart Health Logo" style="height: 45px;">
+        <p style="font-size: 0.75rem; margin: 0; color: #5f7a95;">Layanan Digital Puskesmas - Portal Admin</p>
+      </div>
+      <nav>
+        <div class="nav-container">
+          <div class="nav-breadcrumb">
+            <a href="dashboard.html">🏠 Dashboard</a>
+            <span class="separator">›</span>
+            <span class="current-page">⚙️ Pengaturan</span>
+          </div>
+          <div class="nav-actions">
+            <div class="nav-dropdown">
+              <button class="dropdown-toggle">📋 Menu ▼</button>
+              <div class="dropdown-menu">
+                <a href="kelola-pengguna.html">👥 Kelola Pengguna</a>
+                <a href="kelola-jadwal.html">📅 Kelola Jadwal</a>
+                <a href="kelola-pengumuman.html">📢 Kelola Pengumuman</a>
+                <a href="laporan.html">📊 Laporan</a>
+              </div>
+            </div>
+            <div class="nav-dropdown">
+              <button class="dropdown-toggle">👤 Admin ▼</button>
+              <div class="dropdown-menu">
+                <a href="../logout.html" style="color: #d32f2f; font-weight: 700;">🚪 Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <h2>⚙️ Pengaturan Sistem</h2>
+      <p>Konfigurasi dan pengaturan aplikasi Smart Health Center Service</p>
+    </div>
+
+    <!-- General Settings -->
+    <div class="card">
+      <h3>🏥 Pengaturan Umum</h3>
+      <div class="setting-section">
+        <div class="form-group">
+          <label for="facilityName">Nama Fasilitas Kesehatan</label>
+          <input type="text" id="facilityName" value="Smart Health Center Service">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="facilityPhone">Nomor Telepon</label>
+            <input type="tel" id="facilityPhone" value="(021) 1234-5678">
+          </div>
+          <div class="form-group">
+            <label for="facilityEmail">Email</label>
+            <input type="email" id="facilityEmail" value="info@smarthealth.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="facilityAddress">Alamat</label>
+          <textarea id="facilityAddress" rows="3">Jl. Kesehatan No. 123, Jakarta Pusat 10110, Indonesia</textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="openTime">Jam Buka</label>
+            <input type="time" id="openTime" value="08:00">
+          </div>
+          <div class="form-group">
+            <label for="closeTime">Jam Tutup</label>
+            <input type="time" id="closeTime" value="20:00">
+          </div>
+        </div>
+        <button class="btn btn-primary">💾 Simpan Perubahan</button>
+      </div>
+    </div>
+
+    <!-- Queue Settings -->
+    <div class="card">
+      <h3>📋 Pengaturan Antrean</h3>
+      <div class="setting-section">
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">Aktifkan Sistem Antrean Online</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Izinkan pasien mendaftar antrean melalui aplikasi</p>
+          </div>
+          <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="form-group" style="margin-top: 1rem;">
+          <label for="maxQueuePerPoli">Batas Maksimal Antrean per Poli/Hari</label>
+          <input type="number" id="maxQueuePerPoli" value="50">
+        </div>
+        <div class="form-group">
+          <label for="queueAdvanceDays">Maksimal Pendaftaran H-</label>
+          <input type="number" id="queueAdvanceDays" value="7" placeholder="Hari">
+          <small style="color: #666;">Pasien dapat mendaftar maksimal 7 hari sebelumnya</small>
+        </div>
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">Auto-Cancel Antrean Tidak Hadir</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Otomatis batalkan antrean jika pasien tidak hadir > 15 menit</p>
+          </div>
+          <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">Notifikasi SMS Antrean</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Kirim SMS notifikasi saat antrean dipanggil</p>
+          </div>
+          <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+        </div>
+        <button class="btn btn-primary">💾 Simpan Perubahan</button>
+      </div>
+    </div>
+
+    <!-- Letter Settings -->
+    <div class="card">
+      <h3>📄 Pengaturan Surat Keterangan</h3>
+      <div class="setting-section">
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">Aktivasi Permohonan Surat Online</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Izinkan pasien mengajukan surat keterangan online</p>
+          </div>
+          <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">Validasi Otomatis Surat Sederhana</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Auto-approve surat untuk kasus sederhana (< 3 hari istirahat)</p>
+          </div>
+          <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="form-group" style="margin-top: 1rem;">
+          <label for="letterProcessTime">Estimasi Waktu Proses (jam)</label>
+          <input type="number" id="letterProcessTime" value="24">
+        </div>
+        <div class="form-group">
+          <label for="letterSignature">Penandatangan Surat Default</label>
+          <select id="letterSignature">
+            <option value="doctor">Dokter Pemeriksa</option>
+            <option value="head">Kepala Puskesmas</option>
+            <option value="both">Keduanya</option>
+          </select>
+        </div>
+        <button class="btn btn-primary">💾 Simpan Perubahan</button>
+      </div>
+    </div>
+
+    <!-- Notification Settings -->
+    <div class="card">
+      <h3>🔔 Pengaturan Notifikasi</h3>
+      <div class="setting-section">
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">Notifikasi Email</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Kirim notifikasi penting via email</p>
+          </div>
+          <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">Notifikasi Push</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Kirim push notification ke aplikasi mobile</p>
+          </div>
+          <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">Notifikasi SMS</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Kirim SMS untuk notifikasi penting</p>
+          </div>
+          <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">Reminder Jadwal Kontrol</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Kirim pengingat H-1 sebelum jadwal kontrol</p>
+          </div>
+          <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+        </div>
+        <button class="btn btn-primary">💾 Simpan Perubahan</button>
+      </div>
+    </div>
+
+    <!-- Security Settings -->
+    <div class="card">
+      <h3>🔒 Pengaturan Keamanan</h3>
+      <div class="setting-section">
+        <div class="form-group">
+          <label for="sessionTimeout">Waktu Timeout Sesi (menit)</label>
+          <input type="number" id="sessionTimeout" value="30">
+          <small style="color: #666;">Pengguna akan otomatis logout setelah tidak aktif</small>
+        </div>
+        <div class="form-group">
+          <label for="passwordMinLength">Panjang Minimal Password</label>
+          <input type="number" id="passwordMinLength" value="8">
+        </div>
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">Wajib Password Kompleks</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Password harus mengandung huruf besar, kecil, angka, dan simbol</p>
+          </div>
+          <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">Two-Factor Authentication (2FA)</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Aktifkan autentikasi dua faktor untuk admin</p>
+          </div>
+          <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="form-group">
+          <label for="loginAttempts">Maksimal Percobaan Login Gagal</label>
+          <input type="number" id="loginAttempts" value="5">
+          <small style="color: #666;">Akun akan terkunci sementara setelah percobaan gagal</small>
+        </div>
+        <button class="btn btn-primary">💾 Simpan Perubahan</button>
+      </div>
+    </div>
+
+    <!-- Backup Settings -->
+    <div class="card">
+      <h3>💾 Pengaturan Backup & Restore</h3>
+      <div class="setting-section">
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">Backup Otomatis</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Jalankan backup database secara otomatis</p>
+          </div>
+          <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="form-group" style="margin-top: 1rem;">
+          <label for="backupFrequency">Frekuensi Backup</label>
+          <select id="backupFrequency">
+            <option value="daily" selected>Harian (00:00 WIB)</option>
+            <option value="weekly">Mingguan (Minggu 00:00)</option>
+            <option value="monthly">Bulanan (Tanggal 1)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="backupRetention">Lama Penyimpanan Backup (hari)</label>
+          <input type="number" id="backupRetention" value="30">
+        </div>
+        <div style="margin-top: 1rem; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
+          <p style="margin: 0 0 1rem 0;"><strong>Backup Terakhir:</strong> 27 Nov 2025, 00:00 WIB</p>
+          <div style="display: flex; gap: 1rem;">
+            <button class="btn btn-primary" onclick="backupNow()">🔄 Backup Sekarang</button>
+            <button class="btn btn-secondary" onclick="viewBackups()">📋 Lihat Daftar Backup</button>
+            <button class="btn btn-warning" onclick="restoreBackup()">♻️ Restore Data</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Settings -->
+    <div class="card">
+      <h3>💳 Pengaturan Pembayaran</h3>
+      <div class="setting-section">
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">Pembayaran BPJS</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Aktifkan layanan untuk pasien BPJS</p>
+          </div>
+          <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">Pembayaran Digital</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">QRIS, e-wallet, transfer bank</p>
+          </div>
+          <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="form-group" style="margin-top: 1rem;">
+          <label for="consultationFee">Biaya Konsultasi Umum (Rp)</label>
+          <input type="number" id="consultationFee" value="50000">
+        </div>
+        <div class="form-group">
+          <label for="adminFee">Biaya Administrasi (Rp)</label>
+          <input type="number" id="adminFee" value="10000">
+        </div>
+        <button class="btn btn-primary">💾 Simpan Perubahan</button>
+      </div>
+    </div>
+
+    <!-- System Maintenance -->
+    <div class="card">
+      <h3>🛠️ Maintenance & Troubleshooting</h3>
+      <div class="setting-section">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+          <div style="padding: 1rem; background: #e8f5e9; border-radius: 8px;">
+            <h4 style="margin: 0 0 0.5rem 0;">Database</h4>
+            <p style="margin: 0 0 1rem 0; color: #666;">MySQL 8.0.35</p>
+            <button class="btn btn-secondary" style="width: 100%;" onclick="optimizeDB()">⚡ Optimize</button>
+          </div>
+          <div style="padding: 1rem; background: #e3f2fd; border-radius: 8px;">
+            <h4 style="margin: 0 0 0.5rem 0;">Cache</h4>
+            <p style="margin: 0 0 1rem 0; color: #666;">256 MB Used</p>
+            <button class="btn btn-secondary" style="width: 100%;" onclick="clearCache()">🗑️ Clear Cache</button>
+          </div>
+          <div style="padding: 1rem; background: #fff3cd; border-radius: 8px;">
+            <h4 style="margin: 0 0 0.5rem 0;">Log Files</h4>
+            <p style="margin: 0 0 1rem 0; color: #666;">1.2 GB Total</p>
+            <button class="btn btn-secondary" style="width: 100%;" onclick="viewLogs()">📄 View Logs</button>
+          </div>
+          <div style="padding: 1rem; background: #ffebee; border-radius: 8px;">
+            <h4 style="margin: 0 0 0.5rem 0;">System Check</h4>
+            <p style="margin: 0 0 1rem 0; color: #666;">Last: 27 Nov 2025</p>
+            <button class="btn btn-secondary" style="width: 100%;" onclick="systemCheck()">🔍 Run Check</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Integration Settings -->
+    <div class="card">
+      <h3>🔗 Integrasi & API</h3>
+      <div class="setting-section">
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">API untuk Aplikasi Mobile</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Aktifkan REST API untuk aplikasi mobile</p>
+          </div>
+          <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="setting-item">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0;">Integrasi BPJS VClaim</h4>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Koneksi ke sistem BPJS untuk verifikasi peserta</p>
+          </div>
+          <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="form-group" style="margin-top: 1rem;">
+          <label for="apiKey">API Key</label>
+          <input type="text" id="apiKey" value="sk_live_abc123xyz456..." readonly>
+          <button class="btn btn-secondary" style="margin-top: 0.5rem;" onclick="regenerateAPIKey()">🔄 Regenerate Key</button>
+        </div>
+        <button class="btn btn-primary">💾 Simpan Perubahan</button>
+      </div>
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="card" style="border: 2px solid #d32f2f;">
+      <h3 style="color: #d32f2f;">⚠️ Danger Zone</h3>
+      <div class="setting-section">
+        <div style="padding: 1rem; background: #ffebee; border-radius: 8px; margin-bottom: 1rem;">
+          <p style="margin: 0; color: #d32f2f;"><strong>⚠️ Peringatan:</strong> Aksi di bawah ini bersifat permanen dan tidak dapat dibatalkan!</p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+          <button class="btn btn-danger" onclick="resetAllSettings()">🔄 Reset Semua Pengaturan</button>
+          <button class="btn btn-danger" onclick="clearAllData()">🗑️ Hapus Semua Data</button>
+          <button class="btn btn-danger" onclick="factoryReset()">⚠️ Factory Reset</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Smart Health Center Service. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function toggleSwitch(element) {
+      element.classList.toggle('active');
+      const isActive = element.classList.contains('active');
+      console.log('Setting changed:', isActive);
+    }
+
+    function backupNow() {
+      if (confirm('🔄 Mulai backup database sekarang?\n\nProses akan berjalan di background.')) {
+        alert('✅ Backup dimulai!\n\nAnda akan menerima notifikasi saat selesai.');
+      }
+    }
+
+    function viewBackups() {
+      alert('📋 Daftar Backup Database\n\n1. backup_2025-11-27.sql (142 MB)\n2. backup_2025-11-26.sql (141 MB)\n3. backup_2025-11-25.sql (140 MB)\n...');
+    }
+
+    function restoreBackup() {
+      if (confirm('♻️ Restore database dari backup?\n\n⚠️ PERINGATAN: Data saat ini akan diganti dengan data backup!')) {
+        const backup = prompt('Masukkan nama file backup:\n(Contoh: backup_2025-11-27.sql)');
+        if (backup) {
+          alert('♻️ Proses restore dimulai...\n\nSistem akan restart setelah selesai.');
+        }
+      }
+    }
+
+    function optimizeDB() {
+      if (confirm('⚡ Optimize database?\n\nAkan meningkatkan performa query dan membersihkan fragmen.')) {
+        alert('✅ Database optimization berhasil!\n\nPerforma meningkat 15%.');
+      }
+    }
+
+    function clearCache() {
+      if (confirm('🗑️ Hapus semua cache?\n\nSistem mungkin sedikit lambat setelah cache dibersihkan.')) {
+        alert('✅ Cache berhasil dihapus!\n\n256 MB ruang disk dibebaskan.');
+      }
+    }
+
+    function viewLogs() {
+      alert('📄 System Logs\n\n[2025-11-27 10:30] INFO: User login - admin@hospital.com\n[2025-11-27 10:25] INFO: Backup completed successfully\n[2025-11-27 10:00] WARNING: High CPU usage detected\n...');
+    }
+
+    function systemCheck() {
+      alert('🔍 Running system check...\n\n✅ Database: OK\n✅ File System: OK\n✅ Network: OK\n✅ Memory: OK (75% used)\n⚠️ Disk Space: Warning (85% used)\n\nRecommendation: Free up disk space');
+    }
+
+    function regenerateAPIKey() {
+      if (confirm('🔄 Regenerate API Key?\n\n⚠️ Aplikasi yang menggunakan key lama akan berhenti bekerja!')) {
+        alert('✅ API Key baru berhasil dibuat!\n\nsk_live_new789xyz123...\n\nUpdate aplikasi mobile dengan key baru.');
+      }
+    }
+
+    function resetAllSettings() {
+      if (confirm('⚠️ PERINGATAN!\n\nReset semua pengaturan ke default?\n\nAksi ini TIDAK DAPAT dibatalkan!')) {
+        if (confirm('Apakah Anda YAKIN?\n\nSemua konfigurasi custom akan hilang.')) {
+          alert('✅ Pengaturan berhasil direset ke default!');
+          location.reload();
+        }
+      }
+    }
+
+    function clearAllData() {
+      if (confirm('⚠️ BAHAYA!\n\nHapus SEMUA DATA sistem?\n\nTermasuk:\n- Data pasien\n- Data antrean\n- Riwayat medis\n- Semua pengguna\n\nAksi ini TIDAK DAPAT dibatalkan!')) {
+        const confirmation = prompt('Ketik "HAPUS SEMUA DATA" untuk konfirmasi:');
+        if (confirmation === 'HAPUS SEMUA DATA') {
+          alert('❌ Aksi dibatalkan untuk keamanan.\n\nHubungi developer untuk penghapusan data.');
+        }
+      }
+    }
+
+    function factoryReset() {
+      if (confirm('⚠️ FACTORY RESET!\n\nReset sistem ke kondisi awal instalasi?\n\nSEMUA DATA DAN PENGATURAN AKAN HILANG!\n\nAksi ini TIDAK DAPAT dibatalkan!')) {
+        const confirmation = prompt('Ketik "FACTORY RESET" untuk konfirmasi:');
+        if (confirmation === 'FACTORY RESET') {
+          alert('❌ Aksi dibatalkan untuk keamanan.\n\nHubungi developer untuk factory reset.');
+        }
+      }
+    }
+  </script>
+</body>
+</html>

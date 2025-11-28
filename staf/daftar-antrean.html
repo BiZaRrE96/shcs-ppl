@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar Antrean Pasien - Smart Health Center Service</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .antrean-item {
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      border-radius: 8px;
+      border-left: 4px solid #e0e0e0;
+      background: #fff;
+      transition: all 0.3s ease;
+    }
+    .antrean-item:hover {
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .antrean-item.menunggu {
+      border-left-color: #f57c00;
+      background: #fff3cd;
+    }
+    .antrean-item.dipanggil {
+      border-left-color: #1976d2;
+      background: #e3f2fd;
+    }
+    .antrean-item.dilayani {
+      border-left-color: #388e3c;
+      background: #e8f5e9;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+        <img src="../img/Smarthealth-Logo.png" alt="Smart Health Logo" style="height: 45px;">
+        <p style="font-size: 0.75rem; margin: 0; color: #5f7a95;">Layanan Digital Puskesmas - Portal Staf</p>
+      </div>
+      <nav>
+        <div class="nav-container">
+          <div class="nav-breadcrumb">
+            <a href="dashboard.html">🏠 Dashboard</a>
+            <span class="separator">›</span>
+            <span class="current-page">📋 Daftar Antrean</span>
+          </div>
+          <div class="nav-actions">
+            <div class="nav-dropdown">
+              <button class="dropdown-toggle">📋 Menu ▼</button>
+              <div class="dropdown-menu">
+                <a href="kelola-antrean.html">⚙️ Kelola Antrean</a>
+                <a href="validasi-surat.html">✅ Validasi Surat</a>
+                <a href="hasil-pemeriksaan.html">📝 Hasil Pemeriksaan</a>
+              </div>
+            </div>
+            <div class="nav-dropdown">
+              <button class="dropdown-toggle">👨‍⚕️ Akun ▼</button>
+              <div class="dropdown-menu">
+                <a href="../logout.html" style="color: #d32f2f; font-weight: 700;">🚪 Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <h2>📋 Daftar Antrean Pasien Hari Ini</h2>
+      <p>Rabu, 27 November 2025 - Poli Umum</p>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>45</h3>
+        <p>Total Antrean</p>
+      </div>
+      <div class="stat-card warning">
+        <h3>12</h3>
+        <p>Menunggu</p>
+      </div>
+      <div class="stat-card info">
+        <h3>1</h3>
+        <p>Sedang Dilayani</p>
+      </div>
+      <div class="stat-card success">
+        <h3>32</h3>
+        <p>Selesai</p>
+      </div>
+    </div>
+
+    <!-- Filter & Search -->
+    <div class="card">
+      <h3>🔍 Filter & Pencarian</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="filterStatus">Status</label>
+          <select id="filterStatus" onchange="filterAntrean()">
+            <option value="">Semua Status</option>
+            <option value="menunggu">Menunggu</option>
+            <option value="dipanggil">Dipanggil</option>
+            <option value="dilayani">Sedang Dilayani</option>
+            <option value="selesai">Selesai</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="filterWaktu">Waktu Kunjungan</label>
+          <select id="filterWaktu" onchange="filterAntrean()">
+            <option value="">Semua Waktu</option>
+            <option value="pagi">Pagi (08:00-10:00)</option>
+            <option value="siang">Siang (10:00-12:00)</option>
+            <option value="sore">Sore (13:00-16:00)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="searchPasien">Cari Pasien</label>
+          <input type="text" id="searchPasien" placeholder="Nama atau No. Antrean..." onkeyup="filterAntrean()">
+        </div>
+        <div class="form-group">
+          <label>&nbsp;</label>
+          <button class="btn btn-secondary" onclick="resetFilter()">🔄 Reset Filter</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Current Queue Display -->
+    <div class="card" style="background: linear-gradient(135deg, #00796b 0%, #004d40 100%); color: #fff;">
+      <h3 style="color: #fff;">🎯 Antrean Saat Ini</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 1.5rem;">
+        <div style="text-align: center;">
+          <p style="font-size: 0.9rem; opacity: 0.9;">Sedang Dilayani</p>
+          <p style="font-size: 3rem; font-weight: bold; margin: 0.5rem 0;">A-009</p>
+          <p style="font-size: 1.2rem;">Budi Santoso</p>
+        </div>
+        <div style="text-align: center;">
+          <p style="font-size: 0.9rem; opacity: 0.9;">Antrean Berikutnya</p>
+          <p style="font-size: 3rem; font-weight: bold; margin: 0.5rem 0;">A-010</p>
+          <p style="font-size: 1.2rem;">Siti Aminah</p>
+        </div>
+        <div style="text-align: center;">
+          <p style="font-size: 0.9rem; opacity: 0.9;">Total Menunggu</p>
+          <p style="font-size: 3rem; font-weight: bold; margin: 0.5rem 0;">12</p>
+          <p style="font-size: 1.2rem;">Pasien</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Antrean List -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3>📋 Daftar Antrean Lengkap</h3>
+        <div>
+          <button class="btn btn-primary" onclick="window.print()">🖨️ Cetak Daftar</button>
+        </div>
+      </div>
+
+      <!-- Sedang Dilayani -->
+      <div style="margin-bottom: 2rem;">
+        <h4 style="color: #388e3c; margin-bottom: 1rem;">🟢 Sedang Dilayani (1)</h4>
+        <div class="antrean-item dilayani" data-status="dilayani" data-waktu="pagi" data-nama="Budi Santoso">
+          <div style="display: flex; justify-content: space-between; align-items: start; gap: 1rem;">
+            <div style="flex: 1;">
+              <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                <span style="font-size: 1.5rem; font-weight: bold; color: #388e3c;">A-009</span>
+                <span class="badge badge-success">Sedang Dilayani</span>
+              </div>
+              <p style="font-size: 1.1rem; font-weight: 600; margin: 0.5rem 0;">Budi Santoso</p>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 0.5rem; color: #666;">
+                <p>📅 Terdaftar: 09:45 WIB</p>
+                <p>⏰ Waktu Masuk: 09:58 WIB</p>
+                <p>👤 NIK: 3201012345678902</p>
+                <p>💳 Jenis: BPJS</p>
+              </div>
+              <p style="margin-top: 0.5rem; color: #666;"><strong>Keluhan:</strong> Batuk dan pilek 3 hari, demam ringan</p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <button class="btn btn-success" onclick="lihatDetail('A-009')">👁️ Detail</button>
+              <button class="btn btn-primary" onclick="catatHasil('A-009')">📝 Catat Hasil</button>
+              <button class="btn btn-secondary" onclick="selesaiPelayanan('A-009')">✅ Selesai</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Menunggu -->
+      <div style="margin-bottom: 2rem;">
+        <h4 style="color: #f57c00; margin-bottom: 1rem;">🟡 Menunggu (12)</h4>
+        
+        <div class="antrean-item menunggu" data-status="menunggu" data-waktu="pagi" data-nama="Siti Aminah">
+          <div style="display: flex; justify-content: space-between; align-items: start; gap: 1rem;">
+            <div style="flex: 1;">
+              <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                <span style="font-size: 1.5rem; font-weight: bold; color: #f57c00;">A-010</span>
+                <span class="badge badge-warning">Menunggu</span>
+              </div>
+              <p style="font-size: 1.1rem; font-weight: 600; margin: 0.5rem 0;">Siti Aminah</p>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 0.5rem; color: #666;">
+                <p>📅 Terdaftar: 09:50 WIB</p>
+                <p>⏰ Estimasi: 10:10 WIB</p>
+                <p>👤 NIK: 3201012345678903</p>
+                <p>💳 Jenis: Umum</p>
+              </div>
+              <p style="margin-top: 0.5rem; color: #666;"><strong>Keluhan:</strong> Sakit kepala, pusing</p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <button class="btn btn-primary" onclick="panggilPasien('A-010')">📢 Panggil</button>
+              <button class="btn btn-secondary" onclick="lihatDetail('A-010')">👁️ Detail</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="antrean-item menunggu" data-status="menunggu" data-waktu="pagi" data-nama="Dewi Lestari">
+          <div style="display: flex; justify-content: space-between; align-items: start; gap: 1rem;">
+            <div style="flex: 1;">
+              <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                <span style="font-size: 1.5rem; font-weight: bold; color: #f57c00;">A-011</span>
+                <span class="badge badge-warning">Menunggu</span>
+              </div>
+              <p style="font-size: 1.1rem; font-weight: 600; margin: 0.5rem 0;">Dewi Lestari</p>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 0.5rem; color: #666;">
+                <p>📅 Terdaftar: 09:52 WIB</p>
+                <p>⏰ Estimasi: 10:20 WIB</p>
+                <p>👤 NIK: 3201012345678904</p>
+                <p>💳 Jenis: BPJS</p>
+              </div>
+              <p style="margin-top: 0.5rem; color: #666;"><strong>Keluhan:</strong> Kontrol hipertensi rutin</p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <button class="btn btn-secondary" onclick="lihatDetail('A-011')">👁️ Detail</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="antrean-item menunggu" data-status="menunggu" data-waktu="pagi" data-nama="Ahmad Ridwan">
+          <div style="display: flex; justify-content: space-between; align-items: start; gap: 1rem;">
+            <div style="flex: 1;">
+              <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                <span style="font-size: 1.5rem; font-weight: bold; color: #f57c00;">A-012</span>
+                <span class="badge badge-warning">Menunggu</span>
+              </div>
+              <p style="font-size: 1.1rem; font-weight: 600; margin: 0.5rem 0;">Ahmad Ridwan</p>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 0.5rem; color: #666;">
+                <p>📅 Terdaftar: 09:30 WIB</p>
+                <p>⏰ Estimasi: 10:30 WIB</p>
+                <p>👤 NIK: 3201012345678901</p>
+                <p>💳 Jenis: BPJS</p>
+              </div>
+              <p style="margin-top: 0.5rem; color: #666;"><strong>Keluhan:</strong> Demam 3 hari, batuk dan pilek</p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <button class="btn btn-secondary" onclick="lihatDetail('A-012')">👁️ Detail</button>
+            </div>
+          </div>
+        </div>
+
+        <p style="text-align: center; color: #666; margin-top: 1rem;">
+          ... dan 9 antrean lainnya
+          <button class="btn btn-secondary" style="margin-left: 1rem;">Lihat Semua</button>
+        </p>
+      </div>
+
+      <!-- Selesai -->
+      <div>
+        <h4 style="color: #666; margin-bottom: 1rem;">✅ Selesai Dilayani (32)</h4>
+        <button class="btn btn-secondary" onclick="toggleSelesai()">
+          <span id="toggleText">Tampilkan</span> Daftar Pasien Selesai
+        </button>
+        
+        <div id="daftarSelesai" style="display: none; margin-top: 1rem;">
+          <table>
+            <thead>
+              <tr>
+                <th>No. Antrean</th>
+                <th>Nama Pasien</th>
+                <th>Waktu Masuk</th>
+                <th>Waktu Selesai</th>
+                <th>Diagnosis</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>A-008</td>
+                <td>Ratna Sari</td>
+                <td>09:45</td>
+                <td>09:58</td>
+                <td>Hipertensi (Kontrol)</td>
+                <td><button class="btn btn-secondary" style="padding: 0.5rem 1rem;">Detail</button></td>
+              </tr>
+              <tr>
+                <td>A-007</td>
+                <td>Hasan Basri</td>
+                <td>09:30</td>
+                <td>09:42</td>
+                <td>Diabetes (Kontrol)</td>
+                <td><button class="btn btn-secondary" style="padding: 0.5rem 1rem;">Detail</button></td>
+              </tr>
+              <tr>
+                <td colspan="6" style="text-align: center;">
+                  <button class="btn btn-secondary">Lihat Semua (32)</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Smart Health Center Service. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function filterAntrean() {
+      const status = document.getElementById('filterStatus').value.toLowerCase();
+      const waktu = document.getElementById('filterWaktu').value;
+      const search = document.getElementById('searchPasien').value.toLowerCase();
+
+      const items = document.querySelectorAll('.antrean-item');
+      
+      items.forEach(item => {
+        const itemStatus = item.getAttribute('data-status');
+        const itemWaktu = item.getAttribute('data-waktu');
+        const itemNama = item.getAttribute('data-nama').toLowerCase();
+        const itemText = item.textContent.toLowerCase();
+
+        let show = true;
+
+        if (status && itemStatus !== status) show = false;
+        if (waktu && itemWaktu !== waktu) show = false;
+        if (search && !itemText.includes(search)) show = false;
+
+        item.style.display = show ? '' : 'none';
+      });
+    }
+
+    function resetFilter() {
+      document.getElementById('filterStatus').value = '';
+      document.getElementById('filterWaktu').value = '';
+      document.getElementById('searchPasien').value = '';
+      filterAntrean();
+    }
+
+    function panggilPasien(nomor) {
+      if (confirm('Panggil pasien ' + nomor + '?\n\nSistem akan mengirim notifikasi ke pasien.')) {
+        alert('📢 Pasien ' + nomor + ' dipanggil!\n\nNotifikasi telah dikirim.');
+        window.location.href = 'kelola-antrean.html';
+      }
+    }
+
+    function lihatDetail(nomor) {
+      alert('Detail Pasien ' + nomor + '\n\n[Akan dibuka modal/halaman detail pasien]\n\nBerisi:\n- Data demografi lengkap\n- Riwayat medis\n- Riwayat kunjungan\n- Alergi dan penyakit bawaan');
+    }
+
+    function catatHasil(nomor) {
+      window.location.href = 'hasil-pemeriksaan.html?nomor=' + nomor;
+    }
+
+    function selesaiPelayanan(nomor) {
+      if (confirm('Tandai pelayanan ' + nomor + ' selesai?\n\nPastikan hasil pemeriksaan sudah dicatat.')) {
+        alert('✅ Pelayanan selesai!');
+        location.reload();
+      }
+    }
+
+    function toggleSelesai() {
+      const div = document.getElementById('daftarSelesai');
+      const text = document.getElementById('toggleText');
+      
+      if (div.style.display === 'none') {
+        div.style.display = 'block';
+        text.textContent = 'Sembunyikan';
+      } else {
+        div.style.display = 'none';
+        text.textContent = 'Tampilkan';
+      }
+    }
+
+    // Auto refresh
+    setInterval(() => {
+      console.log('Checking for queue updates...');
+    }, 30000);
+  </script>
+</body>
+</html>

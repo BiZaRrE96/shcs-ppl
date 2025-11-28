@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kelola Pengguna - Smart Health Center Service</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .user-card {
+      display: flex;
+      align-items: start;
+      gap: 1rem;
+      padding: 1.5rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+    .user-card:hover {
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .user-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00796b 0%, #004d40 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+        <img src="../img/Smarthealth-Logo.png" alt="Smart Health Logo" style="height: 45px;">
+        <p style="font-size: 0.75rem; margin: 0; color: #5f7a95;">Layanan Digital Puskesmas - Portal Admin</p>
+      </div>
+      <nav>
+        <div class="nav-container">
+          <div class="nav-breadcrumb">
+            <a href="dashboard.html">🏠 Dashboard</a>
+            <span class="separator">›</span>
+            <span class="current-page">👥 Kelola Pengguna</span>
+          </div>
+          <div class="nav-actions">
+            <div class="nav-dropdown">
+              <button class="dropdown-toggle">📋 Menu ▼</button>
+              <div class="dropdown-menu">
+                <a href="kelola-jadwal.html">📅 Kelola Jadwal</a>
+                <a href="kelola-pengumuman.html">📢 Kelola Pengumuman</a>
+                <a href="laporan.html">📊 Laporan</a>
+                <a href="pengaturan.html">⚙️ Pengaturan</a>
+              </div>
+            </div>
+            <div class="nav-dropdown">
+              <button class="dropdown-toggle">👤 Admin ▼</button>
+              <div class="dropdown-menu">
+                <a href="../logout.html" style="color: #d32f2f; font-weight: 700;">🚪 Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <h2>👥 Kelola Pengguna Sistem</h2>
+      <p>Manajemen akun pengguna (Pasien, Dokter, Tenaga Medis, Admin)</p>
+    </div>
+
+    <!-- Statistics -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>1,247</h3>
+        <p>Total Pengguna</p>
+      </div>
+      <div class="stat-card info">
+        <h3>1,189</h3>
+        <p>Pasien</p>
+      </div>
+      <div class="stat-card success">
+        <h3>12</h3>
+        <p>Dokter</p>
+      </div>
+      <div class="stat-card warning">
+        <h3>6</h3>
+        <p>Tenaga Medis</p>
+      </div>
+      <div class="stat-card danger">
+        <h3>3</h3>
+        <p>Administrator</p>
+      </div>
+      <div class="stat-card">
+        <h3>24</h3>
+        <p>Pengguna Baru (Bulan Ini)</p>
+      </div>
+    </div>
+
+    <!-- Actions & Filters -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3>🔍 Filter & Pencarian</h3>
+        <button class="btn btn-primary" onclick="openModal('addUserModal')">➕ Tambah Pengguna Baru</button>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="filterRole">Role Pengguna</label>
+          <select id="filterRole" onchange="filterUsers()">
+            <option value="">Semua Role</option>
+            <option value="pasien">Pasien</option>
+            <option value="dokter">Dokter</option>
+            <option value="staf">Tenaga Medis</option>
+            <option value="admin">Administrator</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="filterStatus">Status Akun</label>
+          <select id="filterStatus" onchange="filterUsers()">
+            <option value="">Semua Status</option>
+            <option value="aktif">Aktif</option>
+            <option value="nonaktif">Nonaktif</option>
+            <option value="suspended">Suspended</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="searchUser">Cari Pengguna</label>
+          <input type="text" id="searchUser" placeholder="Nama, email, atau NIK..." onkeyup="filterUsers()">
+        </div>
+        <div class="form-group">
+          <label>&nbsp;</label>
+          <button class="btn btn-secondary" onclick="resetFilter()">🔄 Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- User List - Doctors -->
+    <div class="card">
+      <h3>👨‍⚕️ Dokter (12)</h3>
+      
+      <div class="user-card" data-role="dokter" data-status="aktif" data-name="Ahmad Fauzi">
+        <div class="user-avatar">AF</div>
+        <div style="flex: 1;">
+          <h4 style="margin: 0 0 0.5rem 0;">dr. Ahmad Fauzi</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin: 0.5rem 0; color: #666;">
+            <p style="margin: 0;">📧 ahmad.fauzi@hospital.com</p>
+            <p style="margin: 0;">📞 081234567890</p>
+            <p style="margin: 0;">🏥 Poli Umum</p>
+            <p style="margin: 0;">📄 SIP: 123456789</p>
+          </div>
+          <div style="margin-top: 0.5rem;">
+            <span class="badge badge-success">Aktif</span>
+            <span class="badge badge-info">Dokter</span>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <button class="btn btn-primary" onclick="editUser('af')">✏️ Edit</button>
+          <button class="btn btn-secondary" onclick="viewUser('af')">👁️ Detail</button>
+          <button class="btn btn-danger" onclick="toggleUserStatus('af', 'suspend')">🚫 Suspend</button>
+        </div>
+      </div>
+
+      <div class="user-card" data-role="dokter" data-status="aktif" data-name="Siti Nurhaliza">
+        <div class="user-avatar" style="background: linear-gradient(135deg, #1976d2 0%, #0d47a1 100%);">SN</div>
+        <div style="flex: 1;">
+          <h4 style="margin: 0 0 0.5rem 0;">drg. Siti Nurhaliza, Sp.KG</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin: 0.5rem 0; color: #666;">
+            <p style="margin: 0;">📧 siti.nurhaliza@hospital.com</p>
+            <p style="margin: 0;">📞 081234567891</p>
+            <p style="margin: 0;">🏥 Poli Gigi</p>
+            <p style="margin: 0;">📄 SIP: 123456790</p>
+          </div>
+          <div style="margin-top: 0.5rem;">
+            <span class="badge badge-success">Aktif</span>
+            <span class="badge badge-info">Dokter Gigi</span>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <button class="btn btn-primary" onclick="editUser('sn')">✏️ Edit</button>
+          <button class="btn btn-secondary" onclick="viewUser('sn')">👁️ Detail</button>
+          <button class="btn btn-danger" onclick="toggleUserStatus('sn', 'suspend')">🚫 Suspend</button>
+        </div>
+      </div>
+
+      <p style="text-align: center; margin-top: 1rem; color: #666;">
+        ... dan 10 dokter lainnya
+        <button class="btn btn-secondary" style="margin-left: 1rem;">Lihat Semua Dokter</button>
+      </p>
+    </div>
+
+    <!-- User List - Staff -->
+    <div class="card">
+      <h3>👨‍⚕️ Tenaga Medis (6)</h3>
+      
+      <div class="user-card" data-role="staf" data-status="aktif" data-name="Sri Wahyuni">
+        <div class="user-avatar" style="background: linear-gradient(135deg, #388e3c 0%, #1b5e20 100%);">SW</div>
+        <div style="flex: 1;">
+          <h4 style="margin: 0 0 0.5rem 0;">Sri Wahyuni, S.Kep</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin: 0.5rem 0; color: #666;">
+            <p style="margin: 0;">📧 sri.wahyuni@hospital.com</p>
+            <p style="margin: 0;">📞 081234567892</p>
+            <p style="margin: 0;">🏥 Poli Umum</p>
+            <p style="margin: 0;">💼 Perawat</p>
+          </div>
+          <div style="margin-top: 0.5rem;">
+            <span class="badge badge-success">Aktif</span>
+            <span class="badge badge-warning">Perawat</span>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <button class="btn btn-primary" onclick="editUser('sw')">✏️ Edit</button>
+          <button class="btn btn-secondary" onclick="viewUser('sw')">👁️ Detail</button>
+          <button class="btn btn-danger" onclick="toggleUserStatus('sw', 'suspend')">🚫 Suspend</button>
+        </div>
+      </div>
+
+      <p style="text-align: center; margin-top: 1rem; color: #666;">
+        ... dan 5 perawat lainnya
+        <button class="btn btn-secondary" style="margin-left: 1rem;">Lihat Semua Tenaga Medis</button>
+      </p>
+    </div>
+
+    <!-- User List - Patients -->
+    <div class="card">
+      <h3>👤 Pasien (1,189)</h3>
+      
+      <div class="user-card" data-role="pasien" data-status="aktif" data-name="Budi Santoso">
+        <div class="user-avatar" style="background: linear-gradient(135deg, #f57c00 0%, #e65100 100%);">BS</div>
+        <div style="flex: 1;">
+          <h4 style="margin: 0 0 0.5rem 0;">Budi Santoso</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin: 0.5rem 0; color: #666;">
+            <p style="margin: 0;">📧 budi.santoso@email.com</p>
+            <p style="margin: 0;">📞 081234567893</p>
+            <p style="margin: 0;">👤 NIK: 3201012345678902</p>
+            <p style="margin: 0;">📄 No. RM: RM-2024-001234</p>
+          </div>
+          <div style="margin-top: 0.5rem;">
+            <span class="badge badge-success">Aktif</span>
+            <span class="badge badge-secondary">Pasien</span>
+            <span class="badge badge-info">BPJS</span>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <button class="btn btn-primary" onclick="editUser('bs')">✏️ Edit</button>
+          <button class="btn btn-secondary" onclick="viewUser('bs')">👁️ Detail</button>
+          <button class="btn btn-danger" onclick="toggleUserStatus('bs', 'suspend')">🚫 Suspend</button>
+        </div>
+      </div>
+
+      <div class="user-card" data-role="pasien" data-status="aktif" data-name="Dewi Lestari">
+        <div class="user-avatar" style="background: linear-gradient(135deg, #7b1fa2 0%, #4a148c 100%);">DL</div>
+        <div style="flex: 1;">
+          <h4 style="margin: 0 0 0.5rem 0;">Dewi Lestari</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin: 0.5rem 0; color: #666;">
+            <p style="margin: 0;">📧 dewi.lestari@email.com</p>
+            <p style="margin: 0;">📞 081234567894</p>
+            <p style="margin: 0;">👤 NIK: 3201012345678904</p>
+            <p style="margin: 0;">📄 No. RM: RM-2024-001235</p>
+          </div>
+          <div style="margin-top: 0.5rem;">
+            <span class="badge badge-success">Aktif</span>
+            <span class="badge badge-secondary">Pasien</span>
+            <span class="badge badge-warning">Umum</span>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <button class="btn btn-primary" onclick="editUser('dl')">✏️ Edit</button>
+          <button class="btn btn-secondary" onclick="viewUser('dl')">👁️ Detail</button>
+          <button class="btn btn-danger" onclick="toggleUserStatus('dl', 'suspend')">🚫 Suspend</button>
+        </div>
+      </div>
+
+      <p style="text-align: center; margin-top: 1rem; color: #666;">
+        ... dan 1,187 pasien lainnya
+        <button class="btn btn-secondary" style="margin-left: 1rem;">Lihat Semua Pasien</button>
+      </p>
+    </div>
+
+    <!-- Admin List -->
+    <div class="card">
+      <h3>👨‍💼 Administrator (3)</h3>
+      
+      <div class="user-card" data-role="admin" data-status="aktif" data-name="Admin Utama">
+        <div class="user-avatar" style="background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);">AU</div>
+        <div style="flex: 1;">
+          <h4 style="margin: 0 0 0.5rem 0;">Admin Utama</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin: 0.5rem 0; color: #666;">
+            <p style="margin: 0;">📧 admin@hospital.com</p>
+            <p style="margin: 0;">📞 081234567895</p>
+            <p style="margin: 0;">🔐 Super Admin</p>
+            <p style="margin: 0;">📅 Terdaftar: 01 Jan 2024</p>
+          </div>
+          <div style="margin-top: 0.5rem;">
+            <span class="badge badge-success">Aktif</span>
+            <span class="badge badge-danger">Super Admin</span>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <button class="btn btn-primary" onclick="editUser('au')">✏️ Edit</button>
+          <button class="btn btn-secondary" onclick="viewUser('au')">👁️ Detail</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add User Modal -->
+  <div id="addUserModal" class="modal">
+    <div class="modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h3 style="margin: 0;">➕ Tambah Pengguna Baru</h3>
+        <button onclick="closeModal('addUserModal')" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">✖️</button>
+      </div>
+      
+      <form id="addUserForm">
+        <div class="form-group">
+          <label for="userRole">Role Pengguna *</label>
+          <select id="userRole" required onchange="toggleRoleFields()">
+            <option value="">Pilih Role...</option>
+            <option value="pasien">Pasien</option>
+            <option value="dokter">Dokter</option>
+            <option value="staf">Tenaga Medis</option>
+            <option value="admin">Administrator</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="userName">Nama Lengkap *</label>
+            <input type="text" id="userName" required>
+          </div>
+          <div class="form-group">
+            <label for="userNIK">NIK *</label>
+            <input type="text" id="userNIK" required maxlength="16">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="userEmail">Email *</label>
+            <input type="email" id="userEmail" required>
+          </div>
+          <div class="form-group">
+            <label for="userPhone">No. Telepon *</label>
+            <input type="tel" id="userPhone" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="userPassword">Password *</label>
+            <input type="password" id="userPassword" required>
+          </div>
+          <div class="form-group">
+            <label for="userPasswordConfirm">Konfirmasi Password *</label>
+            <input type="password" id="userPasswordConfirm" required>
+          </div>
+        </div>
+
+        <!-- Doctor Specific Fields -->
+        <div id="doctorFields" style="display: none;">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="doctorSIP">Nomor SIP</label>
+              <input type="text" id="doctorSIP">
+            </div>
+            <div class="form-group">
+              <label for="doctorSpecialty">Spesialisasi</label>
+              <input type="text" id="doctorSpecialty" placeholder="Sp.A, Sp.OG, dll">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="doctorPoli">Poli</label>
+            <select id="doctorPoli">
+              <option value="">Pilih Poli...</option>
+              <option value="umum">Poli Umum</option>
+              <option value="gigi">Poli Gigi</option>
+              <option value="anak">Poli Anak</option>
+              <option value="kandungan">Poli Kandungan</option>
+              <option value="mata">Poli Mata</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Staff Specific Fields -->
+        <div id="staffFields" style="display: none;">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="staffPosition">Posisi</label>
+              <select id="staffPosition">
+                <option value="">Pilih Posisi...</option>
+                <option value="perawat">Perawat</option>
+                <option value="bidan">Bidan</option>
+                <option value="analis">Analis Lab</option>
+                <option value="apoteker">Apoteker</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="staffPoli">Poli Penugasan</label>
+              <select id="staffPoli">
+                <option value="">Pilih Poli...</option>
+                <option value="umum">Poli Umum</option>
+                <option value="gigi">Poli Gigi</option>
+                <option value="anak">Poli Anak</option>
+                <option value="kandungan">Poli Kandungan</option>
+                <option value="mata">Poli Mata</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-primary" onclick="saveNewUser()">💾 Simpan</button>
+          <button type="button" class="btn btn-secondary" onclick="closeModal('addUserModal')">❌ Batal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Smart Health Center Service. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function filterUsers() {
+      const role = document.getElementById('filterRole').value.toLowerCase();
+      const status = document.getElementById('filterStatus').value.toLowerCase();
+      const search = document.getElementById('searchUser').value.toLowerCase();
+      
+      const cards = document.querySelectorAll('.user-card');
+      
+      cards.forEach(card => {
+        const cardRole = card.getAttribute('data-role');
+        const cardStatus = card.getAttribute('data-status');
+        const cardName = card.getAttribute('data-name').toLowerCase();
+        const cardText = card.textContent.toLowerCase();
+        
+        let show = true;
+        
+        if (role && cardRole !== role) show = false;
+        if (status && cardStatus !== status) show = false;
+        if (search && !cardText.includes(search)) show = false;
+        
+        card.style.display = show ? '' : 'none';
+      });
+    }
+
+    function resetFilter() {
+      document.getElementById('filterRole').value = '';
+      document.getElementById('filterStatus').value = '';
+      document.getElementById('searchUser').value = '';
+      filterUsers();
+    }
+
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'flex';
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    function toggleRoleFields() {
+      const role = document.getElementById('userRole').value;
+      document.getElementById('doctorFields').style.display = role === 'dokter' ? 'block' : 'none';
+      document.getElementById('staffFields').style.display = role === 'staf' ? 'block' : 'none';
+    }
+
+    function saveNewUser() {
+      const name = document.getElementById('userName').value;
+      const role = document.getElementById('userRole').value;
+      const email = document.getElementById('userEmail').value;
+      const password = document.getElementById('userPassword').value;
+      const passwordConfirm = document.getElementById('userPasswordConfirm').value;
+      
+      if (!name || !role || !email || !password) {
+        alert('❌ Mohon lengkapi semua field yang wajib diisi!');
+        return;
+      }
+      
+      if (password !== passwordConfirm) {
+        alert('❌ Password dan konfirmasi password tidak cocok!');
+        return;
+      }
+      
+      if (confirm('✅ Simpan pengguna baru?\n\nNama: ' + name + '\nRole: ' + role + '\nEmail: ' + email)) {
+        alert('✅ Pengguna baru berhasil ditambahkan!\n\nEmail notifikasi telah dikirim ke ' + email);
+        closeModal('addUserModal');
+        location.reload();
+      }
+    }
+
+    function editUser(userId) {
+      alert('✏️ Edit pengguna ' + userId + '\n\n[Akan dibuka form edit pengguna]');
+    }
+
+    function viewUser(userId) {
+      alert('👁️ Detail pengguna ' + userId + '\n\n[Akan dibuka halaman detail lengkap pengguna]');
+    }
+
+    function toggleUserStatus(userId, action) {
+      const actions = {
+        'suspend': 'suspend (nonaktifkan sementara)',
+        'delete': 'hapus permanen',
+        'activate': 'aktifkan kembali'
+      };
+      
+      if (confirm('⚠️ ' + actions[action] + ' pengguna ' + userId + '?\n\nAksi ini akan mempengaruhi akses pengguna.')) {
+        alert('✅ Status pengguna berhasil diubah!');
+        location.reload();
+      }
+    }
+  </script>
+</body>
+</html>
