@@ -332,7 +332,7 @@ main {
 
 .page-header {
   background: #fff;
-  padding: 2.5rem;
+  padding: 1.75rem;
   border-radius: 8px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
   margin-bottom: 2rem;
@@ -1142,6 +1142,41 @@ footer p {
   margin-bottom: 1.5rem;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
 }
+
+  .quick-questions {
+    border-top: 1px solid #e0e0e0;
+    padding: 0.75rem 1rem;
+    background: #f9fafb;
+  }
+
+  .quick-questions-toggle {
+    width: 100%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+  }
+
+  .quick-questions-panel {
+    margin-top: 0.75rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease, opacity 0.25s ease;
+    opacity: 0;
+  }
+
+  .quick-questions-panel.open {
+    max-height: 500px; /* enough to show all buttons */
+    opacity: 1;
+  }
+
+  .quick-questions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.5rem;
+  }
+  
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {

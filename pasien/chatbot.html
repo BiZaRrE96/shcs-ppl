@@ -1,29 +1,34 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chatbot - Smart Health Center Service</title>
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/header-styles.css">
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/header-styles.css" />
   <script src="../js/header-common.js"></script>
 </head>
+
 <body>
   <header>
     <div class="header-container">
-      <div class="logo" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
-        <img src="../img/Smarthealth-Logo.png" alt="Smart Health Logo" style="height: 45px;">
-        <p style="font-size: 0.75rem; margin: 0; color: #5f7a95;">Layanan Digital Puskesmas</p>
+      <div class="logo" style="flex-direction: column; align-items: flex-start; gap: 0.25rem">
+        <img src="../img/Smarthealth-Logo.png" alt="Smart Health Logo" style="height: 45px" />
+        <p style="font-size: 0.75rem; margin: 0; color: #5f7a95">
+          Layanan Digital Puskesmas
+        </p>
       </div>
-      
+
       <div class="header-right">
         <!-- Notification Bell -->
         <div class="notification-bell" onclick="toggleNotification()">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+            <path
+              d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
           </svg>
           <span class="notification-badge">4</span>
-          
+
           <div class="notification-dropdown" id="notificationDropdown">
             <div class="notification-header">
               <h4>Notifikasi</h4>
@@ -33,7 +38,7 @@
               <div class="notification-item-header unread">
                 <div class="notification-icon-header success">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
                   </svg>
                 </div>
                 <div class="notification-content-header">
@@ -42,11 +47,12 @@
                   <div class="notification-time-header">10 menit lalu</div>
                 </div>
               </div>
-              
+
               <div class="notification-item-header unread">
                 <div class="notification-icon-header info">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    <path
+                      d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" />
                   </svg>
                 </div>
                 <div class="notification-content-header">
@@ -55,11 +61,12 @@
                   <div class="notification-time-header">25 menit lalu</div>
                 </div>
               </div>
-              
+
               <div class="notification-item-header">
                 <div class="notification-icon-header warning">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+                    <path
+                      d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z" />
                   </svg>
                 </div>
                 <div class="notification-content-header">
@@ -68,11 +75,12 @@
                   <div class="notification-time-header">2 hari lalu</div>
                 </div>
               </div>
-              
+
               <div class="notification-item-header">
                 <div class="notification-icon-header info">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                    <path
+                      d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
                   </svg>
                 </div>
                 <div class="notification-content-header">
@@ -87,7 +95,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- User Profile Dropdown -->
         <div class="user-profile" id="userProfile">
           <button class="user-profile-toggle" onclick="toggleUserDropdown()">
@@ -97,18 +105,19 @@
               <span class="user-role">Pasien</span>
             </div>
             <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <path d="M7 10l5 5 5-5z"/>
+              <path d="M7 10l5 5 5-5z" />
             </svg>
           </button>
-          
+
           <div class="user-dropdown" id="userDropdown">
             <a href="profil.html" class="user-dropdown-item">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
               </svg>
               Profil Saya
             </a>
-            <div style="border-top: 1px solid #f0f0f0; margin: 0.5rem 0;"></div>
+            <div style="border-top: 1px solid #f0f0f0; margin: 0.5rem 0"></div>
             <a href="antrean.html" class="user-dropdown-item">
               <span>📋</span> Daftar Antrean
             </a>
@@ -127,16 +136,18 @@
             <a href="chatbot.html" class="user-dropdown-item">
               <span>💬</span> Chatbot
             </a>
-            <div style="border-top: 1px solid #f0f0f0; margin: 0.5rem 0;"></div>
+            <div style="border-top: 1px solid #f0f0f0; margin: 0.5rem 0"></div>
             <a href="#" class="user-dropdown-item">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94L14.4 2.81c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                <path
+                  d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94L14.4 2.81c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
               </svg>
               Pengaturan
             </a>
             <a href="../logout.html" class="user-dropdown-item logout">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                <path
+                  d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" />
               </svg>
               Logout
             </a>
@@ -164,137 +175,182 @@
 
     <div class="card-grid">
       <!-- Chat Container -->
-      <div style="grid-column: 1 / -1;">
+      <div style="grid-column: 1 / -1">
         <div class="chat-container">
           <div class="chat-messages" id="chatMessages">
             <!-- Welcome Message -->
             <div class="message bot">
               <div class="message-bubble">
                 <strong>🤖 HealthBot</strong>
-                <p style="margin-top: 0.5rem;">
+                <p style="margin-top: 0.5rem">
                   Selamat datang di HealthBot Smart Health Center Service! 👋
                 </p>
-                <p style="margin-top: 0.5rem;">
+                <p style="margin-top: 0.5rem">
                   Saya siap membantu Anda dengan informasi tentang:
                 </p>
-                <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                <ul style="margin: 0.5rem 0; padding-left: 1.5rem">
                   <li>Jadwal praktik dokter</li>
                   <li>Pendaftaran antrean</li>
                   <li>Layanan yang tersedia</li>
                   <li>Permohonan surat kesehatan</li>
                   <li>Informasi umum puskesmas</li>
                 </ul>
-                <p style="margin-top: 0.5rem;">
-                  Silakan ketik pertanyaan Anda atau pilih pertanyaan cepat di bawah!
+                <p style="margin-top: 0.5rem">
+                  Silakan ketik pertanyaan Anda atau pilih pertanyaan cepat di
+                  bawah!
                 </p>
               </div>
             </div>
           </div>
 
+          <div class="quick-questions">
+            <button class="btn btn-secondary quick-questions-toggle" type="button" onclick="toggleQuickQuestions()">
+              ⚡ Pertanyaan Cepat
+            </button>
+
+            <div id="quickQuestionsPanel" class="quick-questions-panel">
+              <div class="quick-questions-grid">
+                <button class="btn btn-secondary" onclick="quickQuestion('Jam operasional puskesmas')">
+                  ⏰ Jam Operasional
+                </button>
+                <button class="btn btn-secondary" onclick="quickQuestion('Jadwal dokter hari ini')">
+                  👨‍⚕️ Jadwal Dokter
+                </button>
+                <button class="btn btn-secondary" onclick="quickQuestion('Cara daftar antrean')">
+                  📋 Cara Daftar Antrean
+                </button>
+                <button class="btn btn-secondary" onclick="quickQuestion('Layanan yang tersedia')">
+                  🏥 Layanan Tersedia
+                </button>
+                <button class="btn btn-secondary" onclick="quickQuestion('Cara membuat surat sehat')">
+                  📄 Surat Kesehatan
+                </button>
+                <button class="btn btn-secondary" onclick="quickQuestion('Lokasi dan kontak puskesmas')">
+                  📍 Lokasi & Kontak
+                </button>
+                <button class="btn btn-secondary" onclick="quickQuestion('Persyaratan BPJS')">
+                  💳 Persyaratan BPJS
+                </button>
+                <button class="btn btn-secondary" onclick="quickQuestion('Biaya layanan')">
+                  💰 Biaya Layanan
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div class="chat-input">
-            <input 
-              type="text" 
-              id="messageInput" 
-              placeholder="Ketik pertanyaan Anda di sini..." 
-              onkeypress="handleKeyPress(event)"
-            >
-            <button class="btn btn-primary" onclick="sendMessage()">📤</button>
+            <input type="text" id="messageInput" placeholder="Ketik pertanyaan Anda di sini..."
+              onkeypress="handleKeyPress(event)" />
+            <button class="btn btn-primary" onclick="sendMessage()">
+              📤
+            </button>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Quick Questions -->
-    <div class="card">
-      <h3>⚡ Pertanyaan Cepat</h3>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
-        <button class="btn btn-secondary" onclick="quickQuestion('Jam operasional puskesmas')">
-          ⏰ Jam Operasional
-        </button>
-        <button class="btn btn-secondary" onclick="quickQuestion('Jadwal dokter hari ini')">
-          👨‍⚕️ Jadwal Dokter
-        </button>
-        <button class="btn btn-secondary" onclick="quickQuestion('Cara daftar antrean')">
-          📋 Cara Daftar Antrean
-        </button>
-        <button class="btn btn-secondary" onclick="quickQuestion('Layanan yang tersedia')">
-          🏥 Layanan Tersedia
-        </button>
-        <button class="btn btn-secondary" onclick="quickQuestion('Cara membuat surat sehat')">
-          📄 Surat Kesehatan
-        </button>
-        <button class="btn btn-secondary" onclick="quickQuestion('Lokasi dan kontak puskesmas')">
-          📍 Lokasi & Kontak
-        </button>
-        <button class="btn btn-secondary" onclick="quickQuestion('Persyaratan BPJS')">
-          💳 Persyaratan BPJS
-        </button>
-        <button class="btn btn-secondary" onclick="quickQuestion('Biaya layanan')">
-          💰 Biaya Layanan
-        </button>
       </div>
     </div>
 
     <!-- FAQ -->
     <div class="card">
       <h3>❓ Frequently Asked Questions (FAQ)</h3>
-      <div style="margin-top: 1rem;">
-        <details style="margin-bottom: 1rem; padding: 1rem; background: #f9f9f9; border-radius: 5px;">
-          <summary style="cursor: pointer; font-weight: 600; color: #00796b;">
+      <div style="margin-top: 1rem">
+        <details style="
+              margin-bottom: 1rem;
+              padding: 1rem;
+              background: #f9f9f9;
+              border-radius: 5px;
+            ">
+          <summary style="cursor: pointer; font-weight: 600; color: #00796b">
             Bagaimana cara mendaftar antrean online?
           </summary>
-          <p style="margin-top: 1rem; color: #666; line-height: 1.8;">
-            1. Login ke akun Anda<br>
-            2. Pilih menu "Daftar Antrean"<br>
-            3. Pilih tanggal kunjungan dan poli yang dituju<br>
-            4. Isi keluhan dan data yang diperlukan<br>
-            5. Klik "Daftar Antrean"<br>
-            6. Nomor antrean akan muncul dan bisa dipantau di menu "Status Antrean"
+          <p style="margin-top: 1rem; color: #666; line-height: 1.8">
+            1. Login ke akun Anda<br />
+            2. Pilih menu "Daftar Antrean"<br />
+            3. Pilih tanggal kunjungan dan poli yang dituju<br />
+            4. Isi keluhan dan data yang diperlukan<br />
+            5. Klik "Daftar Antrean"<br />
+            6. Nomor antrean akan muncul dan bisa dipantau di menu "Status
+            Antrean"
           </p>
         </details>
 
-        <details style="margin-bottom: 1rem; padding: 1rem; background: #f9f9f9; border-radius: 5px;">
-          <summary style="cursor: pointer; font-weight: 600; color: #00796b;">
+        <details style="
+              margin-bottom: 1rem;
+              padding: 1rem;
+              background: #f9f9f9;
+              border-radius: 5px;
+            ">
+          <summary style="cursor: pointer; font-weight: 600; color: #00796b">
             Apakah bisa membatalkan antrean yang sudah didaftarkan?
           </summary>
-          <p style="margin-top: 1rem; color: #666; line-height: 1.8;">
-            Ya, Anda bisa membatalkan antrean melalui menu "Status Antrean". Klik tombol "Batalkan Antrean" pada antrean yang aktif. Pastikan membatalkan minimal 1 jam sebelum waktu kunjungan.
+          <p style="margin-top: 1rem; color: #666; line-height: 1.8">
+            Ya, Anda bisa membatalkan antrean melalui menu "Status Antrean".
+            Klik tombol "Batalkan Antrean" pada antrean yang aktif. Pastikan
+            membatalkan minimal 1 jam sebelum waktu kunjungan.
           </p>
         </details>
 
-        <details style="margin-bottom: 1rem; padding: 1rem; background: #f9f9f9; border-radius: 5px;">
-          <summary style="cursor: pointer; font-weight: 600; color: #00796b;">
+        <details style="
+              margin-bottom: 1rem;
+              padding: 1rem;
+              background: #f9f9f9;
+              border-radius: 5px;
+            ">
+          <summary style="cursor: pointer; font-weight: 600; color: #00796b">
             Berapa lama proses pembuatan surat keterangan sehat?
           </summary>
-          <p style="margin-top: 1rem; color: #666; line-height: 1.8;">
-            Proses pembuatan surat keterangan sehat memerlukan waktu 1-2 hari kerja setelah Anda melakukan pemeriksaan. Anda akan mendapat notifikasi saat surat sudah siap dan bisa diunduh.
+          <p style="margin-top: 1rem; color: #666; line-height: 1.8">
+            Proses pembuatan surat keterangan sehat memerlukan waktu 1-2 hari
+            kerja setelah Anda melakukan pemeriksaan. Anda akan mendapat
+            notifikasi saat surat sudah siap dan bisa diunduh.
           </p>
         </details>
 
-        <details style="margin-bottom: 1rem; padding: 1rem; background: #f9f9f9; border-radius: 5px;">
-          <summary style="cursor: pointer; font-weight: 600; color: #00796b;">
+        <details style="
+              margin-bottom: 1rem;
+              padding: 1rem;
+              background: #f9f9f9;
+              border-radius: 5px;
+            ">
+          <summary style="cursor: pointer; font-weight: 600; color: #00796b">
             Apakah layanan ini gratis?
           </summary>
-          <p style="margin-top: 1rem; color: #666; line-height: 1.8;">
-            Layanan pemeriksaan dan penerbitan surat di puskesmas gratis untuk warga setempat yang memiliki KTP. Untuk pasien BPJS, semua layanan ditanggung oleh BPJS. Pasien umum (non-BPJS) ada tarif sesuai ketentuan.
+          <p style="margin-top: 1rem; color: #666; line-height: 1.8">
+            Layanan pemeriksaan dan penerbitan surat di puskesmas gratis untuk
+            warga setempat yang memiliki KTP. Untuk pasien BPJS, semua layanan
+            ditanggung oleh BPJS. Pasien umum (non-BPJS) ada tarif sesuai
+            ketentuan.
           </p>
         </details>
 
-        <details style="margin-bottom: 1rem; padding: 1rem; background: #f9f9f9; border-radius: 5px;">
-          <summary style="cursor: pointer; font-weight: 600; color: #00796b;">
+        <details style="
+              margin-bottom: 1rem;
+              padding: 1rem;
+              background: #f9f9f9;
+              border-radius: 5px;
+            ">
+          <summary style="cursor: pointer; font-weight: 600; color: #00796b">
             Bagaimana jika saya lupa password?
           </summary>
-          <p style="margin-top: 1rem; color: #666; line-height: 1.8;">
-            Klik "Lupa Password" di halaman login, masukkan email yang terdaftar, dan kami akan mengirimkan link untuk reset password ke email Anda.
+          <p style="margin-top: 1rem; color: #666; line-height: 1.8">
+            Klik "Lupa Password" di halaman login, masukkan email yang
+            terdaftar, dan kami akan mengirimkan link untuk reset password ke
+            email Anda.
           </p>
         </details>
 
-        <details style="margin-bottom: 1rem; padding: 1rem; background: #f9f9f9; border-radius: 5px;">
-          <summary style="cursor: pointer; font-weight: 600; color: #00796b;">
+        <details style="
+              margin-bottom: 1rem;
+              padding: 1rem;
+              background: #f9f9f9;
+              border-radius: 5px;
+            ">
+          <summary style="cursor: pointer; font-weight: 600; color: #00796b">
             Apakah bisa konsultasi dengan dokter melalui online?
           </summary>
-          <p style="margin-top: 1rem; color: #666; line-height: 1.8;">
-            Saat ini, konsultasi langsung dengan dokter belum tersedia secara online. Namun, Anda bisa menggunakan chatbot ini untuk informasi umum, atau datang langsung ke puskesmas setelah mendaftar antrean.
+          <p style="margin-top: 1rem; color: #666; line-height: 1.8">
+            Saat ini, konsultasi langsung dengan dokter belum tersedia secara
+            online. Namun, Anda bisa menggunakan chatbot ini untuk informasi
+            umum, atau datang langsung ke puskesmas setelah mendaftar antrean.
           </p>
         </details>
       </div>
@@ -302,19 +358,22 @@
 
     <!-- Info -->
     <div class="card-grid">
-      <div class="card" style="background: #e3f2fd; border-left: 4px solid #1976d2;">
-        <h3 style="color: #1565c0;">ℹ️ Tentang HealthBot</h3>
-        <p style="color: #666; line-height: 1.8;">
-          HealthBot adalah asisten virtual berbasis AI yang siap membantu Anda 24/7. Bot ini dapat menjawab pertanyaan umum tentang layanan puskesmas, jadwal dokter, dan prosedur administratif.
+      <div class="card" style="background: #e3f2fd; border-left: 4px solid #1976d2">
+        <h3 style="color: #1565c0">ℹ️ Tentang HealthBot</h3>
+        <p style="color: #666; line-height: 1.8">
+          HealthBot adalah asisten virtual berbasis AI yang siap membantu Anda
+          24/7. Bot ini dapat menjawab pertanyaan umum tentang layanan
+          puskesmas, jadwal dokter, dan prosedur administratif.
         </p>
-        <p style="color: #666; line-height: 1.8; margin-top: 1rem;">
-          Jika pertanyaan Anda tidak dapat dijawab oleh bot, Anda bisa menghubungi admin melalui telepon atau WhatsApp.
+        <p style="color: #666; line-height: 1.8; margin-top: 1rem">
+          Jika pertanyaan Anda tidak dapat dijawab oleh bot, Anda bisa
+          menghubungi admin melalui telepon atau WhatsApp.
         </p>
       </div>
 
-      <div class="card" style="background: #fff3cd; border-left: 4px solid #f57c00;">
-        <h3 style="color: #e65100;">📞 Butuh Bantuan Lebih?</h3>
-        <ul style="line-height: 2; color: #666;">
+      <div class="card" style="background: #fff3cd; border-left: 4px solid #f57c00">
+        <h3 style="color: #e65100">📞 Butuh Bantuan Lebih?</h3>
+        <ul style="line-height: 2; color: #666">
           <li><strong>Telepon:</strong> (021) 1234-5678</li>
           <li><strong>WhatsApp:</strong> 0812-3456-7890</li>
           <li><strong>Email:</strong> info@smarthealthcenter.id</li>
@@ -331,44 +390,65 @@
   <script>
     // Knowledge base for chatbot responses
     const knowledgeBase = {
-      'jam operasional': {
-        response: 'Jam operasional puskesmas:\n\n⏰ Senin - Jumat: 08:00 - 16:00 WIB\n⏰ Sabtu: 08:00 - 13:00 WIB\n⏰ Minggu & Libur Nasional: Tutup\n\nUntuk pendaftaran antrean online bisa dilakukan kapan saja!'
+      "jam operasional": {
+        response:
+          "Jam operasional puskesmas:\n\n⏰ Senin - Jumat: 08:00 - 16:00 WIB\n⏰ Sabtu: 08:00 - 13:00 WIB\n⏰ Minggu & Libur Nasional: Tutup\n\nUntuk pendaftaran antrean online bisa dilakukan kapan saja!",
       },
-      'jadwal dokter': {
-        response: 'Untuk melihat jadwal lengkap dokter, silakan kunjungi menu "Jadwal Dokter" atau klik link berikut:\n\n👉 <a href="jadwal-dokter.html" style="color: #00796b;">Lihat Jadwal Dokter</a>\n\nJadwal dokter hari ini (Rabu):\n• dr. Ahmad Fauzi - Poli Umum (08:00-13:00)\n• drg. Siti Nurhaliza - Poli Gigi (08:00-14:00)\n• dr. Dewi Lestari, Sp.OG - Poli KIA (09:00-12:00)'
+      "jadwal dokter": {
+        response:
+          'Untuk melihat jadwal lengkap dokter, silakan kunjungi menu "Jadwal Dokter" atau klik link berikut:\n\n👉 <a href="jadwal-dokter.html" style="color: #00796b;">Lihat Jadwal Dokter</a>\n\nJadwal dokter hari ini (Rabu):\n• dr. Ahmad Fauzi - Poli Umum (08:00-13:00)\n• drg. Siti Nurhaliza - Poli Gigi (08:00-14:00)\n• dr. Dewi Lestari, Sp.OG - Poli KIA (09:00-12:00)',
       },
-      'daftar antrean': {
-        response: 'Cara mendaftar antrean online:\n\n1️⃣ Klik menu "Daftar Antrean" atau <a href="antrean.html" style="color: #00796b;">klik di sini</a>\n2️⃣ Pilih tanggal kunjungan (hari ini atau besok)\n3️⃣ Pilih poli/layanan yang dituju\n4️⃣ Pilih dokter (opsional)\n5️⃣ Isi keluhan Anda\n6️⃣ Klik "Daftar Antrean"\n\n✅ Nomor antrean akan langsung muncul dan bisa dipantau secara real-time!'
+      "daftar antrean": {
+        response:
+          'Cara mendaftar antrean online:\n\n1️⃣ Klik menu "Daftar Antrean" atau <a href="antrean.html" style="color: #00796b;">klik di sini</a>\n2️⃣ Pilih tanggal kunjungan (hari ini atau besok)\n3️⃣ Pilih poli/layanan yang dituju\n4️⃣ Pilih dokter (opsional)\n5️⃣ Isi keluhan Anda\n6️⃣ Klik "Daftar Antrean"\n\n✅ Nomor antrean akan langsung muncul dan bisa dipantau secara real-time!',
       },
-      'layanan': {
-        response: 'Layanan yang tersedia di puskesmas:\n\n🏥 Poli Umum\n🦷 Poli Gigi\n👶 Poli KIA (Kesehatan Ibu dan Anak)\n👴 Poli Lansia\n💉 Poli TB\n🥗 Poli Gizi\n💉 Imunisasi\n🔬 Laboratorium\n💊 Apotek\n\nSemua layanan dapat diakses setelah mendaftar antrean!'
+      layanan: {
+        response:
+          "Layanan yang tersedia di puskesmas:\n\n🏥 Poli Umum\n🦷 Poli Gigi\n👶 Poli KIA (Kesehatan Ibu dan Anak)\n👴 Poli Lansia\n💉 Poli TB\n🥗 Poli Gizi\n💉 Imunisasi\n🔬 Laboratorium\n💊 Apotek\n\nSemua layanan dapat diakses setelah mendaftar antrean!",
       },
-      'surat': {
-        response: 'Jenis surat yang bisa diajukan:\n\n✅ Surat Keterangan Sehat\n🤒 Surat Keterangan Sakit\n🏥 Surat Rujukan\n\nCara mengajukan:\n1. Klik menu "Permohonan Surat" atau <a href="permohonan-surat.html" style="color: #00796b;">klik di sini</a>\n2. Pilih jenis surat\n3. Isi formulir\n4. Tunggu validasi (1-2 hari kerja)\n5. Unduh surat di menu "Riwayat Surat"\n\nCatatan: Anda perlu datang untuk pemeriksaan jika diperlukan!'
+      surat: {
+        response:
+          'Jenis surat yang bisa diajukan:\n\n✅ Surat Keterangan Sehat\n🤒 Surat Keterangan Sakit\n🏥 Surat Rujukan\n\nCara mengajukan:\n1. Klik menu "Permohonan Surat" atau <a href="permohonan-surat.html" style="color: #00796b;">klik di sini</a>\n2. Pilih jenis surat\n3. Isi formulir\n4. Tunggu validasi (1-2 hari kerja)\n5. Unduh surat di menu "Riwayat Surat"\n\nCatatan: Anda perlu datang untuk pemeriksaan jika diperlukan!',
       },
-      'lokasi': {
-        response: 'Informasi Kontak Puskesmas:\n\n📍 Alamat: Jl. Kesehatan No. 123, Kota Sehat, Provinsi Sejahtera, 12345\n\n📞 Telepon: (021) 1234-5678\n📱 WhatsApp: 0812-3456-7890\n✉️ Email: info@smarthealthcenter.id\n\n⏰ Jam Pelayanan:\nSenin-Jumat: 08:00-16:00\nSabtu: 08:00-13:00\nMinggu: Tutup'
+      lokasi: {
+        response:
+          "Informasi Kontak Puskesmas:\n\n📍 Alamat: Jl. Kesehatan No. 123, Kota Sehat, Provinsi Sejahtera, 12345\n\n📞 Telepon: (021) 1234-5678\n📱 WhatsApp: 0812-3456-7890\n✉️ Email: info@smarthealthcenter.id\n\n⏰ Jam Pelayanan:\nSenin-Jumat: 08:00-16:00\nSabtu: 08:00-13:00\nMinggu: Tutup",
       },
-      'bpjs': {
-        response: 'Persyaratan untuk pasien BPJS:\n\n📋 Dokumen yang harus dibawa:\n• Kartu BPJS Kesehatan (asli)\n• KTP (asli)\n• Kartu Keluarga (fotocopy)\n\n✅ Pastikan:\n• Faskes Tingkat 1 terdaftar di puskesmas ini\n• Kartu BPJS masih aktif\n• Iuran sudah dibayar\n\n💡 Untuk rujukan ke RS, harus ada surat rujukan dari dokter puskesmas.'
+      bpjs: {
+        response:
+          "Persyaratan untuk pasien BPJS:\n\n📋 Dokumen yang harus dibawa:\n• Kartu BPJS Kesehatan (asli)\n• KTP (asli)\n• Kartu Keluarga (fotocopy)\n\n✅ Pastikan:\n• Faskes Tingkat 1 terdaftar di puskesmas ini\n• Kartu BPJS masih aktif\n• Iuran sudah dibayar\n\n💡 Untuk rujukan ke RS, harus ada surat rujukan dari dokter puskesmas.",
       },
-      'biaya': {
-        response: 'Informasi biaya layanan:\n\n✅ GRATIS untuk:\n• Warga setempat dengan KTP\n• Pasien BPJS (semua layanan ditanggung)\n\n💰 Pasien Umum (Non-BPJS):\n• Pemeriksaan Umum: Rp 20.000\n• Pemeriksaan Gigi: Rp 30.000\n• Surat Keterangan: Rp 10.000\n• Laboratorium: Sesuai jenis pemeriksaan\n\nUntuk informasi detail, hubungi (021) 1234-5678'
-      }
+      biaya: {
+        response:
+          "Informasi biaya layanan:\n\n✅ GRATIS untuk:\n• Warga setempat dengan KTP\n• Pasien BPJS (semua layanan ditanggung)\n\n💰 Pasien Umum (Non-BPJS):\n• Pemeriksaan Umum: Rp 20.000\n• Pemeriksaan Gigi: Rp 30.000\n• Surat Keterangan: Rp 10.000\n• Laboratorium: Sesuai jenis pemeriksaan\n\nUntuk informasi detail, hubungi (021) 1234-5678",
+      },
     };
+
+    function toggleQuickQuestions() {
+      const panel = document.getElementById('quickQuestionsPanel');
+      if (!panel) return;
+      panel.classList.toggle('open');
+    }
+
 
     function sendMessage() {
       const input = document.getElementById('messageInput');
       const message = input.value.trim();
-      
+
       if (message === '') return;
-      
+
+      // Hide / shrink Pertanyaan Cepat when a message is sent
+      const quickPanel = document.getElementById('quickQuestionsPanel');
+      if (quickPanel) {
+        quickPanel.classList.remove('open');
+      }
+
       // Display user message
       addMessage(message, 'user');
-      
+
       // Clear input
       input.value = '';
-      
+
       // Generate bot response
       setTimeout(() => {
         const response = generateResponse(message);
@@ -376,65 +456,67 @@
       }, 500);
     }
 
+
     function quickQuestion(question) {
-      document.getElementById('messageInput').value = question;
+      document.getElementById("messageInput").value = question;
       sendMessage();
     }
 
     function addMessage(text, sender) {
-      const messagesContainer = document.getElementById('chatMessages');
-      const messageDiv = document.createElement('div');
+      const messagesContainer = document.getElementById("chatMessages");
+      const messageDiv = document.createElement("div");
       messageDiv.className = `message ${sender}`;
-      
-      const bubbleDiv = document.createElement('div');
-      bubbleDiv.className = 'message-bubble';
-      
-      if (sender === 'bot') {
-        const header = document.createElement('strong');
-        header.textContent = '🤖 HealthBot';
+
+      const bubbleDiv = document.createElement("div");
+      bubbleDiv.className = "message-bubble";
+
+      if (sender === "bot") {
+        const header = document.createElement("strong");
+        header.textContent = "🤖 HealthBot";
         bubbleDiv.appendChild(header);
-        
-        const content = document.createElement('p');
-        content.style.marginTop = '0.5rem';
+
+        const content = document.createElement("p");
+        content.style.marginTop = "0.5rem";
         content.innerHTML = text;
         bubbleDiv.appendChild(content);
       } else {
         bubbleDiv.textContent = text;
       }
-      
+
       messageDiv.appendChild(bubbleDiv);
       messagesContainer.appendChild(messageDiv);
-      
+
       // Scroll to bottom
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
     function generateResponse(message) {
       const lowerMessage = message.toLowerCase();
-      
+
       // Check knowledge base
       for (const [key, value] of Object.entries(knowledgeBase)) {
         if (lowerMessage.includes(key)) {
           return value.response;
         }
       }
-      
+
       // Default response
       return `Terima kasih atas pertanyaan Anda: "${message}"\n\nMaaf, saya belum bisa menjawab pertanyaan tersebut dengan tepat. Silakan coba:\n\n1. Gunakan pertanyaan cepat di bawah chat\n2. Lihat FAQ untuk pertanyaan umum\n3. Hubungi admin di (021) 1234-5678 atau WhatsApp 0812-3456-7890\n\nAtau coba tanyakan tentang:\n• Jam operasional\n• Jadwal dokter\n• Cara daftar antrean\n• Layanan yang tersedia\n• Permohonan surat`;
     }
 
     function handleKeyPress(event) {
-      if (event.key === 'Enter') {
+      if (event.key === "Enter") {
         sendMessage();
       }
     }
 
     // Auto-focus input on load
-    window.addEventListener('load', function() {
-      document.getElementById('messageInput').focus();
+    window.addEventListener("load", function () {
+      document.getElementById("messageInput").focus();
     });
   </script>
   <script src="../js/chatbot-knowledge-base.js"></script>
-  <script src="../js/chatbot-expanded-widget.js"></script>
+  <!-- <script src="../js/chatbot-expanded-widget.js"></script> -->
 </body>
+
 </html>
