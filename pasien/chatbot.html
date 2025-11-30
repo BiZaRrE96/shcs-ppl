@@ -20,6 +20,12 @@
         </p>
       </div>
 
+      <nav style="flex: 1; margin-left: 2rem;">
+        <a href="dashboard.html" style="color: #1a8bd3; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; border-bottom: 2px solid #1a8bd3; padding: 0.5rem 0;">
+          🏠 Dashboard
+        </a>
+      </nav>
+
       <div class="header-right">
         <!-- Notification Bell -->
         <div class="notification-bell" onclick="toggleNotification()">
@@ -156,16 +162,6 @@
       </div>
     </div>
   </header>
-
-  <nav style="border-bottom: 1px solid #e0e0e0; padding: 0;">
-    <div class="header-container" style="padding: 0.75rem 2rem;">
-      <div style="display: flex; align-items: center; gap: 2rem;">
-        <a href="dashboard.html" style="color: #2c4964; text-decoration: none; font-weight: 500; padding: 0.5rem 0;">
-          🏠 Dashboard
-        </a>
-      </div>
-    </div>
-  </nav>
 
   <main>
     <!-- <div class="page-header">
@@ -394,11 +390,11 @@
         response:
           "Jam operasional puskesmas:\n\n⏰ Senin - Jumat: 08:00 - 16:00 WIB\n⏰ Sabtu: 08:00 - 13:00 WIB\n⏰ Minggu & Libur Nasional: Tutup\n\nUntuk pendaftaran antrean online bisa dilakukan kapan saja!",
       },
-      "jadwal dokter": {
+      'jadwal dokter': {
         response:
           'Untuk melihat jadwal lengkap dokter, silakan kunjungi menu "Jadwal Dokter" atau klik link berikut:\n\n👉 <a href="jadwal-dokter.html" style="color: #00796b;">Lihat Jadwal Dokter</a>\n\nJadwal dokter hari ini (Rabu):\n• dr. Ahmad Fauzi - Poli Umum (08:00-13:00)\n• drg. Siti Nurhaliza - Poli Gigi (08:00-14:00)\n• dr. Dewi Lestari, Sp.OG - Poli KIA (09:00-12:00)',
       },
-      "daftar antrean": {
+      'daftar antrean': {
         response:
           'Cara mendaftar antrean online:\n\n1️⃣ Klik menu "Daftar Antrean" atau <a href="antrean.html" style="color: #00796b;">klik di sini</a>\n2️⃣ Pilih tanggal kunjungan (hari ini atau besok)\n3️⃣ Pilih poli/layanan yang dituju\n4️⃣ Pilih dokter (opsional)\n5️⃣ Isi keluhan Anda\n6️⃣ Klik "Daftar Antrean"\n\n✅ Nomor antrean akan langsung muncul dan bisa dipantau secara real-time!',
       },
@@ -501,7 +497,7 @@
       }
 
       // Default response
-      return `Terima kasih atas pertanyaan Anda: "${message}"\n\nMaaf, saya belum bisa menjawab pertanyaan tersebut dengan tepat. Silakan coba:\n\n1. Gunakan pertanyaan cepat di bawah chat\n2. Lihat FAQ untuk pertanyaan umum\n3. Hubungi admin di (021) 1234-5678 atau WhatsApp 0812-3456-7890\n\nAtau coba tanyakan tentang:\n• Jam operasional\n• Jadwal dokter\n• Cara daftar antrean\n• Layanan yang tersedia\n• Permohonan surat`;
+      return `Terima kasih atas pertanyaan Anda: "${message}"\n\nMaaf, saya belum bisa menjawab pertanyaan tersebut dengan tepat. Silakan coba:\n\n1. Gunakan pertanyaan cepat di bawah chat\n2. Lihat FAQ untuk pertanyaan umum\n3. Hubungi admin di (021) 1234-5678 atau WhatsApp 0812-3456-7890\n\nAtau coba tanyakan tentang:\n• Jam operasional\n• Jadwal dokter\n• Cara daftar antrean\n• Layanan yang tersedia\n• Permohonan surat`;`
     }
 
     function handleKeyPress(event) {

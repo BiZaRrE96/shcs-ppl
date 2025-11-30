@@ -15,6 +15,12 @@
         <img src="../img/Smarthealth-Logo.png" alt="Smart Health Logo" style="height: 45px;">
         <p style="font-size: 0.75rem; margin: 0; color: #5f7a95;">Layanan Digital Puskesmas</p>
       </div>
+
+      <nav style="flex: 1; margin-left: 2rem;">
+        <a href="dashboard.html" style="color: #6B9BD1; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem;">
+          🏠 Dashboard
+        </a>
+      </nav>
       
       <div class="header-right">
         <!-- Notification Bell -->
@@ -146,50 +152,33 @@
     </div>
   </header>
 
-  <nav style=" border-bottom: 1px solid #e0e0e0; padding: 0;">
-    <div class="header-container" style="padding: 0.75rem 2rem;">
-      <div style="display: flex; align-items: center; gap: 2rem;">
-        <a href="dashboard.html" style="color: #2c4964; text-decoration: none; font-weight: 500; padding: 0.5rem 0;">
-          🏠 Dashboard
-        </a>
-        <div class="nav-dropdown" style="position: relative;">
-          <button class="dropdown-toggle" style="background: none; border: none; color: #1a8bd3; font-size: 1rem; padding: 0.5rem 1rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-weight: 600; border-bottom: 2px solid #1a8bd3;">
-            📋 Layanan ▼
-          </button>
-          <div class="dropdown-menu" style="min-width: 220px;">
-            <a href="antrean.html" style="background: #f5f9fc; color: #1a8bd3; font-weight: 600;">📋 Daftar Antrean</a>
-            <a href="status-antrean.html">⏱️ Status Antrean</a>
-            <a href="permohonan-surat.html">📄 Permohonan Surat</a>
-            <a href="riwayat-surat.html">📚 Riwayat Surat</a>
-            <a href="jadwal-dokter.html">👨‍⚕️ Jadwal Dokter</a>
-            <a href="chatbot.html">💬 Chatbot</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
+
 
   <main>
     <div class="page-header">
-      <h2>📋 Pendaftaran Antrean Online</h2>
+      <h2>Pendaftaran Antrean Online</h2>
       <p>Daftar antrean puskesmas dari rumah, hemat waktu Anda</p>
     </div>
 
     <!-- Info Antrean Hari Ini -->
     <div class="stats-grid">
       <div class="stat-card">
+        <div class="stat-icon">👥</div>
         <h3>45</h3>
         <p>Total Antrean Hari Ini</p>
       </div>
       <div class="stat-card info">
+        <div class="stat-icon">⏳</div>
         <h3>12</h3>
         <p>Sedang Dilayani</p>
       </div>
       <div class="stat-card warning">
+        <div class="stat-icon">⏱️</div>
         <h3>~20 menit</h3>
         <p>Rata-rata Waktu Tunggu</p>
       </div>
       <div class="stat-card success">
+        <div class="stat-icon">✓</div>
         <h3>Buka</h3>
         <p>Status Pendaftaran</p>
       </div>
@@ -197,7 +186,7 @@
 
     <!-- Form Pendaftaran -->
     <div class="form-container">
-      <h3 style="color: #00796b; margin-bottom: 1.5rem;">Formulir Pendaftaran Antrean</h3>
+      <h3 style="color: #6B9BD1; margin-bottom: 1.5rem; font-size: 1.2rem;">Formulir Pendaftaran Antrean</h3>
       
       <form id="formAntrean" action="status-antrean.html" method="get">
         <div class="form-group">
@@ -276,7 +265,7 @@
           </div>
         </div>
 
-        <div class="btn-group mt-2">
+        <div class="btn-group mt-2" style="justify-content: flex-end;">
           <button type="submit" class="btn btn-primary">
             ✅ Daftar Antrean
           </button>
@@ -292,7 +281,7 @@
 
     <!-- Informasi Antrean per Poli -->
     <div class="card mt-2">
-      <h3>📊 Informasi Antrean Saat Ini per Poli</h3>
+      <h3 style="font-size: 1.1rem;">Informasi Antrean Saat Ini per Poli</h3>
       <table>
         <thead>
           <tr>
@@ -345,8 +334,8 @@
 
     <!-- Panduan -->
     <div class="card-grid mt-2">
-      <div class="card" style="background: #e3f2fd; border-left: 4px solid #1976d2;">
-        <h3 style="color: #1565c0;">ℹ️ Cara Pendaftaran</h3>
+      <div class="card" style="background: #E8F0FF; border-left: 4px solid #6B9BD1;">
+        <h3 style="color: #5A7BA8; font-size: 1.1rem;">Cara Pendaftaran</h3>
         <ol style="line-height: 2; color: #666; margin-top: 1rem;">
           <li>Pilih tanggal kunjungan (hari ini atau besok)</li>
           <li>Pilih poli/layanan yang ingin dituju</li>
@@ -358,8 +347,8 @@
         </ol>
       </div>
 
-      <div class="card" style="background: #fff3cd; border-left: 4px solid #f57c00;">
-        <h3 style="color: #e65100;">⚠️ Perhatian!</h3>
+      <div class="card" style="background: #FFF5E6; border-left: 4px solid #C9A961;">
+        <h3 style="color: #A68951; font-size: 1.1rem;">Perhatian!</h3>
         <ul style="line-height: 2; color: #666; margin-top: 1rem;">
           <li>Pendaftaran <strong>maksimal H+1</strong> (hari ini atau besok)</li>
           <li>Datang <strong>15 menit sebelum</strong> waktu preferensi</li>

@@ -15,6 +15,12 @@
         <img src="../img/Smarthealth-Logo.png" alt="Smart Health Logo" style="height: 45px;">
         <p style="font-size: 0.75rem; margin: 0; color: #5f7a95;">Layanan Digital Puskesmas</p>
       </div>
+
+      <nav style="flex: 1; margin-left: 2rem;">
+        <a href="dashboard.html" style="color: #1a8bd3; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; border-bottom: 2px solid #1a8bd3; padding: 0.5rem 0;">
+          🏠 Dashboard
+        </a>
+      </nav>
       
       <div class="header-right">
         <!-- Notification Bell -->
@@ -146,39 +152,29 @@
     </div>
   </header>
 
-  <nav style=" border-bottom: 1px solid #e0e0e0; padding: 0;">
-    <div class="header-container" style="padding: 0.75rem 2rem;">
-      <div style="display: flex; align-items: center; gap: 2rem;">
-        <a href="dashboard.html" style="color: #2c4964; text-decoration: none; font-weight: 500; padding: 0.5rem 0;">
-          🏠 Dashboard
-        </a>
-      </div>
-    </div>
-  </nav>
-
   <main>
     <div class="page-header">
-      <h2>👤 Profil Saya</h2>
+      <h2>Profil Saya</h2>
       <p>Kelola informasi pribadi dan pengaturan akun Anda</p>
     </div>
 
     <!-- Profile Header Card -->
-    <div class="card" style="background: linear-gradient(135deg, #00796b 0%, #004d40 100%); color: #fff;">
+    <div class="card" style="background: linear-gradient(135deg, #6B9BD1 0%, #5A8BC1 100%); color: #fff;">
       <div style="display: flex; align-items: center; gap: 2rem;">
-        <div style="width: 100px; height: 100px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 3rem;">
+        <div style="width: 90px; height: 90px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
           👤
         </div>
         <div style="flex: 1;">
-          <h2 style="color: #fff; margin-bottom: 0.5rem;">Ahmad Ridwan</h2>
-          <p style="font-size: 1.1rem; opacity: 0.95;">NIK: 3201012345678901</p>
-          <p style="font-size: 0.9rem; opacity: 0.9;">No. Rekam Medis: RM-2025-00123</p>
+          <h2 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.5rem;">Ahmad Ridwan</h2>
+          <p style="font-size: 0.95rem; opacity: 0.95;">NIK: 3201012345678901</p>
+          <p style="font-size: 0.85rem; opacity: 0.9;">No. Rekam Medis: RM-2025-00123</p>
           <p style="margin-top: 1rem;">
             <span class="badge badge-success">Akun Terverifikasi ✓</span>
-            <span class="badge" style="background: #fff; color: #00796b; margin-left: 0.5rem;">Pasien BPJS</span>
+            <span class="badge" style="background: #fff; color: #6B9BD1; margin-left: 0.5rem;">Pasien BPJS</span>
           </p>
         </div>
         <div>
-          <button class="btn btn-success" onclick="editProfil()">✏️ Edit Profil</button>
+          <button class="btn btn-success" onclick="editProfil()">Edit Profil</button>
         </div>
       </div>
     </div>
@@ -186,16 +182,16 @@
     <!-- Tab Navigation -->
     <div class="card">
       <div style="display: flex; gap: 0.5rem; border-bottom: 2px solid #e0e0e0; padding-bottom: 0;">
-        <button class="tab-btn active" onclick="showTab('data-pribadi')" id="tab-data-pribadi">
+        <button class="tab-btn active" onclick="showTab('data-pribadi')" id="tab-data-pribadi" style="font-size: 0.95rem;">
           Data Pribadi
         </button>
-        <button class="tab-btn" onclick="showTab('data-medis')" id="tab-data-medis">
+        <button class="tab-btn" onclick="showTab('data-medis')" id="tab-data-medis" style="font-size: 0.95rem;">
           Data Medis
         </button>
-        <button class="tab-btn" onclick="showTab('keamanan')" id="tab-keamanan">
+        <button class="tab-btn" onclick="showTab('keamanan')" id="tab-keamanan" style="font-size: 0.95rem;">
           Keamanan
         </button>
-        <button class="tab-btn" onclick="showTab('notifikasi')" id="tab-notifikasi">
+        <button class="tab-btn" onclick="showTab('notifikasi')" id="tab-notifikasi" style="font-size: 0.95rem;">
           Notifikasi
         </button>
       </div>
@@ -204,7 +200,7 @@
     <!-- Tab Content: Data Pribadi -->
     <div id="content-data-pribadi" class="tab-content">
       <div class="form-container">
-        <h3 style="color: #00796b; margin-bottom: 1.5rem;">📋 Data Pribadi</h3>
+        <h3 style="color: #6B9BD1; margin-bottom: 1.5rem; font-size: 1.1rem;">Data Pribadi</h3>
         
         <form id="formDataPribadi">
           <div class="form-row">
@@ -325,9 +321,9 @@
             </div>
           </div>
 
-          <div class="btn-group mt-2">
+          <div class="btn-group mt-2" style="justify-content: flex-end;">
             <button type="submit" class="btn btn-primary">💾 Simpan Perubahan</button>
-            <button type="reset" class="btn btn-secondary">🔄 Reset</button>
+            <button type="reset" class="btn btn-secondary">🔄 Reset Form</button>
           </div>
         </form>
       </div>
@@ -561,7 +557,7 @@ Diabetes Tipe 2 (terkontrol dengan obat)</textarea>
             </div>
           </div>
 
-          <div class="btn-group mt-2">
+          <div class="btn-group mt-2" style="justify-content: flex-end;">
             <button type="submit" class="btn btn-primary">💾 Simpan Pengaturan</button>
           </div>
         </form>

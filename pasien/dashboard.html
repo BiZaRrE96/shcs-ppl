@@ -251,7 +251,7 @@
 
     /* Modern Dashboard Styles */
     .welcome-banner {
-      background: linear-gradient(135deg, #1a8bd3 0%, #2c4964 100%);
+      background: linear-gradient(135deg, #6B9BD1 0%, #5A8BC1 100%);
       color: white;
       padding: 2.5rem;
       border-radius: 16px;
@@ -270,7 +270,7 @@
       border-radius: 50%;
     }
     .welcome-banner h1 {
-      font-size: 2rem;
+      font-size: 1.8rem;
       margin-bottom: 0.5rem;
       position: relative;
     }
@@ -282,11 +282,11 @@
     
     /* Enhanced Status Card */
     .status-antrean-card {
-      background: linear-gradient(135deg, #00897b 0%, #00695c 100%);
+      background: linear-gradient(135deg, #6B9BD1 0%, #5A8BC1 100%);
       color: white;
       padding: 2rem;
       border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 137, 123, 0.3);
+      box-shadow: 0 8px 24px rgba(107, 155, 209, 0.2);
       margin-bottom: 2rem;
     }
     .status-grid {
@@ -302,7 +302,7 @@
       font-weight: 500;
     }
     .status-value {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: 700;
       margin: 0.5rem 0;
     }
@@ -323,7 +323,7 @@
       padding: 1.75rem;
       border-radius: 12px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-      border-left: 4px solid #1a8bd3;
+      border-left: 4px solid white;
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
@@ -335,18 +335,15 @@
       right: -30%;
       width: 100px;
       height: 100px;
-      background: radial-gradient(circle, rgba(26, 139, 211, 0.1) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(107, 155, 209, 0.08) 0%, transparent 70%);
       border-radius: 50%;
     }
     .stat-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(26, 139, 211, 0.15);
+      box-shadow: 0 8px 24px rgba(107, 155, 209, 0.12);
     }
-    .stat-card.info { border-left-color: #2196f3; }
-    .stat-card.success { border-left-color: #4caf50; }
-    .stat-card.warning { border-left-color: #ff9800; }
     .stat-card h3 {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: 700;
       color: #2c4964;
       margin-bottom: 0.5rem;
@@ -354,6 +351,11 @@
     .stat-card p {
       color: #5f7a95;
       font-size: 0.95rem;
+      margin: 0;
+    }
+    .stat-card .stat-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
     }
     
     /* Quick Actions Enhanced */
@@ -375,19 +377,25 @@
     }
     .action-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(26, 139, 211, 0.15);
-      border-color: #1a8bd3;
+      box-shadow: 0 8px 24px rgba(107, 155, 209, 0.15);
+      border-color: #6B9BD1;
     }
     .action-icon {
       width: 70px;
       height: 70px;
-      background: linear-gradient(135deg, rgba(26, 139, 211, 0.1), rgba(44, 73, 100, 0.1));
+      background: linear-gradient(135deg, rgba(107, 155, 209, 0.15), rgba(107, 155, 209, 0.08));
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 1rem;
       font-size: 2rem;
+      color: #6B9BD1;
+      transition: all 0.3s ease;
+    }
+    .action-card:hover .action-icon {
+      background: linear-gradient(135deg, rgba(107, 155, 209, 0.25), rgba(107, 155, 209, 0.15));
+      transform: scale(1.1);
     }
     .action-card h4 {
       color: #2c4964;
@@ -453,6 +461,12 @@
         <img src="../img/Smarthealth-Logo.png" alt="Smart Health Logo" style="height: 45px;">
         <p style="font-size: 0.75rem; margin: 0; color: #5f7a95;">Layanan Digital Puskesmas</p>
       </div>
+
+      <nav style="flex: 1; margin-left: 2rem;">
+        <a href="dashboard.html" style="color: #1a8bd3; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; border-bottom: 2px solid #1a8bd3; padding: 0.5rem 0;">
+          🏠 Dashboard
+        </a>
+      </nav>
       
       <div class="header-right">
         <!-- Notification Bell -->
@@ -584,40 +598,19 @@
     </div>
   </header>
 
-  <nav style=" border-bottom: 1px solid #e0e0e0; padding: 0;">
-    <div class="header-container" style="padding: 0.75rem 2rem;">
-      <div style="display: flex; align-items: center; gap: 2rem;">
-        <a href="dashboard.html" style="color: #1a8bd3; text-decoration: none; font-weight: 600; padding: 0.5rem 0; border-bottom: 2px solid #1a8bd3;">
-          🏠 Dashboard
-        </a>
-        <div class="nav-dropdown" style="position: relative;">
-          <button class="dropdown-toggle" style="background: none; border: none; color: #2c4964; font-size: 1rem; padding: 0.5rem 1rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
-            📋 Layanan ▼
-          </button>
-          <div class="dropdown-menu" style="min-width: 220px;">
-            <a href="antrean.html">📋 Daftar Antrean</a>
-            <a href="status-antrean.html">⏱️ Status Antrean</a>
-            <a href="permohonan-surat.html">📄 Permohonan Surat</a>
-            <a href="riwayat-surat.html">📚 Riwayat Surat</a>
-            <a href="jadwal-dokter.html">👨‍⚕️ Jadwal Dokter</a>
-            <a href="chatbot.html">💬 Chatbot</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
+
 
   <main>
     <!-- Welcome Banner -->
     <div class="welcome-banner">
-      <h1>👋 Selamat Datang, <span id="userName">Demo Pasien</span>!</h1>
+      <h1>Halo, <span id="userName">Demo Pasien</span>! 👋</h1>
       <p>Kelola kesehatan Anda dengan mudah melalui dashboard ini</p>
     </div>
 
     <!-- Status Antrean Aktif -->
     <div class="status-antrean-card">
-      <h3 style="color: #fff; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-        <span>⏱️</span> Status Antrean Anda Saat Ini
+      <h3 style="color: #fff; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; font-size: 1.25rem;">
+        <span>📋</span> Status Antrean Anda Saat Ini
       </h3>
       <div class="status-grid">
         <div class="status-item">
@@ -643,7 +636,7 @@
     </div>
 
     <!-- Quick Stats -->
-    <h3 style="color: #2c4964; margin-bottom: 1.25rem; font-size: 1.5rem; margin-top: 2rem;">📊 Ringkasan Statistik</h3>
+    <h3 style="color: #2c4964; margin-bottom: 1.5rem; font-size: 1.2rem; margin-top: 2rem;">Ringkasan Data</h3>
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-icon">📅</div>
@@ -652,21 +645,21 @@
           <p>Kunjungan Bulan Ini</p>
         </div>
       </div>
-      <div class="stat-card info">
+      <div class="stat-card">
         <div class="stat-icon">⏱️</div>
         <div class="stat-info">
           <h3>2</h3>
           <p>Surat Menunggu Validasi</p>
         </div>
       </div>
-      <div class="stat-card success">
+      <div class="stat-card">
         <div class="stat-icon">✅</div>
         <div class="stat-info">
           <h3>12</h3>
           <p>Total Surat Diterbitkan</p>
         </div>
       </div>
-      <div class="stat-card warning">
+      <div class="stat-card">
         <div class="stat-icon">📆</div>
         <div class="stat-info">
           <h3>1</h3>
@@ -676,37 +669,32 @@
     </div>
 
     <!-- Quick Actions -->
-    <h3 style="color: #2c4964; margin-bottom: 1.25rem; font-size: 1.5rem; margin-top: 2rem;">⚡ Aksi Cepat</h3>
+    <h3 style="color: #2c4964; margin-bottom: 1.5rem; font-size: 1.2rem; margin-top: 2rem;">Akses Cepat</h3>
     <div class="quick-actions-grid">
       <a href="antrean.html" class="action-card">
         <div class="action-icon">
-          <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="20" y="15" width="60" height="70" rx="3" fill="#1a8bd3" opacity="0.2"/>
-            <rect x="30" y="25" width="40" height="8" rx="2" fill="#1a8bd3"/>
-            <rect x="30" y="38" width="40" height="4" rx="1" fill="#5f7a95" opacity="0.5"/>
-            <rect x="30" y="46" width="30" height="4" rx="1" fill="#5f7a95" opacity="0.5"/>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
         </div>
-        <h4>Daftar Antrean Baru</h4>
+        <h4>Daftar Antrean</h4>
         <p>Buat antrean untuk kunjungan Anda</p>
       </a>
       
       <a href="permohonan-surat.html" class="action-card">
         <div class="action-icon">
-          <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="25" y="20" width="50" height="65" rx="2" fill="#1a8bd3" opacity="0.2"/>
-            <path d="M 60 65 L 65 70 L 75 55" stroke="#1a8bd3" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
         </div>
-        <h4>Ajukan Surat</h4>
-        <p>Permohonan surat kesehatan online</p>
+        <h4>Permohonan Surat</h4>
+        <p>Ajukan surat kesehatan online</p>
       </a>
       
       <a href="jadwal-dokter.html" class="action-card">
         <div class="action-icon">
-          <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="35" r="12" fill="#1a8bd3" opacity="0.3"/>
-            <path d="M 35 55 Q 35 48 42 48 L 58 48 Q 65 48 65 55 L 65 75 Q 65 80 60 80 L 40 80 Q 35 80 35 75 Z" fill="#1a8bd3" opacity="0.2"/>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
           </svg>
         </div>
         <h4>Jadwal Dokter</h4>
@@ -714,14 +702,18 @@
       </a>
       
       <a href="chatbot.html" class="action-card">
-        <div class="action-icon">💬</div>
+        <div class="action-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+          </svg>
+        </div>
         <h4>Tanya Chatbot</h4>
         <p>Konsultasi dengan asisten virtual</p>
       </a>
     </div>
 
     <!-- Riwayat Kunjungan Terakhir -->
-    <h3 style="color: #2c4964; margin-bottom: 1.25rem; font-size: 1.5rem; margin-top: 2rem;">📊 Riwayat Kunjungan Terakhir</h3>
+    <h3 style="color: #2c4964; margin-bottom: 1.5rem; font-size: 1.2rem; margin-top: 2rem;">Riwayat Kunjungan Terbaru</h3>
     <div class="card" style="overflow-x: auto;">
       <table style="border-collapse: collapse; width: 100%; min-width: 600px;">
         <thead>
@@ -776,7 +768,7 @@
 
     <!-- Jadwal Mendatang -->
     <div class="card">
-      <h3>📅 Jadwal Kontrol Mendatang</h3>
+      <h3 style="font-size: 1.1rem;">Jadwal Kontrol Berikutnya</h3>
       <div class="timeline">
         <div class="timeline-item">
           <h4>5 Desember 2025 - 10:00 WIB</h4>
@@ -791,7 +783,7 @@
 
     <!-- Info Penting -->
     <div class="card" style="background: #fff3cd; border-left: 4px solid #f57c00;">
-      <h3 style="color: #e65100;">⚠️ Informasi Penting</h3>
+      <h3 style="color: #e65100; font-size: 1.1rem;">Informasi Penting</h3>
       <ul style="line-height: 2; color: #666; margin-top: 1rem;">
         <li>Harap datang <strong>15 menit sebelum</strong> nomor antrean Anda dipanggil</li>
         <li>Bawa <strong>KTP dan Kartu BPJS</strong> (jika ada) saat berkunjung</li>

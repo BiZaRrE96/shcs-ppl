@@ -14,6 +14,13 @@
         <img src="../img/Smarthealth-Logo.png" alt="Smart Health Logo" style="height: 45px;">
         <p style="font-size: 0.75rem; margin: 0; color: #5f7a95;">Layanan Digital Puskesmas - Portal Pasien</p>
       </div>
+
+      <nav style="flex: 1; margin-left: 2rem;">
+        <a href="dashboard.html" style="color: #1a8bd3; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; border-bottom: 2px solid #1a8bd3; padding: 0.5rem 0;">
+          🏠 Dashboard
+        </a>
+      </nav>
+      
       <div class="header-right">
         <!-- Notification Bell -->
         <div class="notification-bell" onclick="toggleNotification()">
@@ -144,47 +151,35 @@
     </div>
   </header>
 
-  <nav style=" border-bottom: 1px solid #e0e0e0; padding: 0;">
-    <div class="header-container" style="padding: 0.75rem 2rem;">
-      <div style="display: flex; align-items: center; gap: 2rem;">
-        <a href="dashboard.html" style="color: #2c4964; text-decoration: none; font-weight: 500; padding: 0.5rem 0;">
-          🏠 Dashboard
-        </a>
-      </div>
-    </div>
-  </nav>
-    </div>
-  </header>
-
   <main>
     <div class="page-header">
-      <h2>📄 Permohonan Surat</h2>
+      <h2>Permohonan Surat</h2>
       <p>Ajukan permohonan surat kesehatan secara online</p>
     </div>
 
     <!-- Jenis Surat -->
     <div class="card">
-      <h3>Pilih Jenis Surat yang Dibutuhkan</h3>
+      <h3 style="font-size: 1.2rem;">Pilih Jenis Surat yang Dibutuhkan</h3>
       <div class="card-grid" style="margin-top: 1.5rem;">
-        <div class="card" style="cursor: pointer; border: 2px solid #e0e0e0;" onclick="pilihSurat('sehat')">
+        <div class="card" style="cursor: pointer; border: 2px solid #E0E8F5; transition: all 0.3s;" onclick="pilihSurat('sehat')" onmouseover="this.style.borderColor='#6B9BD1'; this.style.boxShadow='0 4px 12px rgba(107,155,209,0.15)'" onmouseout="this.style.borderColor='#E0E8F5'; this.style.boxShadow='none'">
           <div style="text-align: center;">
-            <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
-            <h4 style="color: #00796b;">Surat Keterangan Sehat</h4>
-            <p style="color: #666; margin-top: 0.5rem;">Untuk keperluan administrasi, lamaran kerja, dll.</p>
+            <div style="font-size: 2.5rem; margin-bottom: 1rem;">📋</div>
+            <h4 style="color: #6B9BD1; font-size: 1rem;">Surat Keterangan Sehat</h4>
+            <p style="color: #666; margin-top: 0.5rem; font-size: 0.9rem;">Untuk keperluan administrasi, lamaran kerja, dll.</p>
           </div>
         </div>
-        <div class="card" style="cursor: pointer; border: 2px solid #e0e0e0;" onclick="pilihSurat('sakit')">
+        <div class="card" style="cursor: pointer; border: 2px solid #FFE8E8; transition: all 0.3s;" onclick="pilihSurat('sakit')" onmouseover="this.style.borderColor='#D97B7B'; this.style.boxShadow='0 4px 12px rgba(217,123,123,0.15)'" onmouseout="this.style.borderColor='#FFE8E8'; this.style.boxShadow='none'">
           <div style="text-align: center;">
-            <div style="font-size: 3rem; margin-bottom: 1rem;">🤒</div>
-            <h4 style="color: #00796b;">Surat Keterangan Sakit</h4>
-            <p style="color: #666; margin-top: 0.5rem;">Untuk izin tidak masuk kerja/sekolah</p>
+            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏥</div>
+            <h4 style="color: #D97B7B; font-size: 1rem;">Surat Keterangan Sakit</h4>
+            <p style="color: #666; margin-top: 0.5rem; font-size: 0.9rem;">Untuk izin tidak masuk kerja/sekolah</p>
           </div>
         </div>
-        <div class="card" style="cursor: pointer; border: 2px solid #e0e0e0;" onclick="pilihSurat('rujukan')">
+        <div class="card" style="cursor: pointer; border: 2px solid #FFE8D0; transition: all 0.3s;" onclick="pilihSurat('rujukan')" onmouseover="this.style.borderColor='#D9A861'; this.style.boxShadow='0 4px 12px rgba(217,168,97,0.15)'" onmouseout="this.style.borderColor='#FFE8D0'; this.style.boxShadow='none'">
           <div style="text-align: center;">
-            <div style="font-size: 3rem; margin-bottom: 1rem;">🏥</div>
-            <h4 style="color: #00796b;">Surat Rujukan</h4>
-            <p style="color: #666; margin-top: 0.5rem;">Untuk rujukan ke rumah sakit atau spesialis</p>
+            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏨</div>
+            <h4 style="color: #D9A861; font-size: 1rem;">Surat Rujukan</h4>
+            <p style="color: #666; margin-top: 0.5rem; font-size: 0.9rem;">Untuk rujukan ke rumah sakit atau spesialis</p>
           </div>
         </div>
       </div>
@@ -237,7 +232,7 @@
           </div>
         </div>
 
-        <div class="btn-group mt-2">
+        <div class="btn-group mt-2" style="justify-content: flex-end;">
           <button type="submit" class="btn btn-primary">✅ Ajukan Permohonan</button>
           <button type="button" class="btn btn-secondary" onclick="resetForm()">🔄 Reset</button>
           <button type="button" class="btn btn-danger" onclick="batalForm()">❌ Batal</button>
@@ -315,7 +310,7 @@
           </div>
         </div>
 
-        <div class="btn-group mt-2">
+        <div class="btn-group mt-2" style="justify-content: flex-end;">
           <button type="submit" class="btn btn-primary">✅ Ajukan Permohonan</button>
           <button type="button" class="btn btn-secondary" onclick="resetForm()">🔄 Reset</button>
           <button type="button" class="btn btn-danger" onclick="batalForm()">❌ Batal</button>
@@ -396,7 +391,7 @@
         </div>
 
         <div class="form-group">
-          <div style="background: #e3f2fd; padding: 1rem; border-radius: 5px; border-left: 4px solid #1976d2;">
+          <div class="alert alert-info" style="background-color: #e3f2fd; border-left: 4px solid #1565c0; padding: 1rem; border-radius: 8px; margin-top: 1.5rem;">
             <p style="color: #1565c0; font-weight: 600; margin-bottom: 0.5rem;">ℹ️ Informasi:</p>
             <ul style="color: #666; line-height: 1.8; margin-left: 1.5rem;">
               <li>Rujukan hanya diterbitkan berdasarkan <strong>rekomendasi dokter</strong></li>
@@ -408,7 +403,7 @@
           </div>
         </div>
 
-        <div class="btn-group mt-2">
+        <div class="btn-group mt-2" style="justify-content: flex-end;">
           <button type="submit" class="btn btn-primary">✅ Ajukan Permohonan</button>
           <button type="button" class="btn btn-secondary" onclick="resetForm()">🔄 Reset</button>
           <button type="button" class="btn btn-danger" onclick="batalForm()">❌ Batal</button>

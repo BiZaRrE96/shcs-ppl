@@ -24,6 +24,12 @@
         <img src="../img/Smarthealth-Logo.png" alt="Smart Health Logo" style="height: 45px;">
         <p style="font-size: 0.75rem; margin: 0; color: #5f7a95;">Layanan Digital Puskesmas</p>
       </div>
+
+      <nav style="flex: 1; margin-left: 2rem;">
+        <a href="dashboard.html" style="color: #1a8bd3; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; border-bottom: 2px solid #1a8bd3; padding: 0.5rem 0;">
+          🏠 Dashboard
+        </a>
+      </nav>
       
       <div class="header-right">
         <!-- Notification Bell -->
@@ -155,52 +161,44 @@
     </div>
   </header>
 
-  <nav style=" border-bottom: 1px solid #e0e0e0; padding: 0;">
-    <div class="header-container" style="padding: 0.75rem 2rem;">
-      <div style="display: flex; align-items: center; gap: 2rem;">
-        <a href="dashboard.html" style="color: #2c4964; text-decoration: none; font-weight: 500; padding: 0.5rem 0;">
-          🏠 Dashboard
-        </a>
-      </div>
-    </div>
-  </nav>
+
 
   <main>
     <div class="page-header">
-      <h2>⏱️ Status Antrean Real-time</h2>
+      <h2>Status Antrean Real-time</h2>
       <p>Pantau posisi antrean Anda secara langsung</p>
     </div>
 
     <!-- Antrean Aktif Anda -->
     <div class="queue-display">
-      <p style="font-size: 1.2rem; opacity: 0.95;">Nomor Antrean Anda</p>
-      <div class="queue-number pulse">A-012</div>
-      <div class="queue-status">Menunggu</div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 2rem;">
+      <p style="font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem;">Nomor Antrean Anda</p>
+      <div class="queue-number pulse" style="font-size: 3.5rem; font-weight: 700;">A-012</div>
+      <div class="queue-status" style="font-size: 1.1rem;">Menunggu</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 2.5rem;">
         <div>
-          <p style="font-size: 0.9rem; opacity: 0.9;">Posisi Antrean</p>
-          <p style="font-size: 2rem; font-weight: bold;">3 / 15</p>
-          <p style="font-size: 0.9rem;">2 orang di depan Anda</p>
+          <p style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">Posisi Antrean</p>
+          <p style="font-size: 1.8rem; font-weight: bold;">3 / 15</p>
+          <p style="font-size: 0.85rem;">2 orang di depan Anda</p>
         </div>
         <div>
-          <p style="font-size: 0.9rem; opacity: 0.9;">Estimasi Waktu Tunggu</p>
-          <p style="font-size: 2rem; font-weight: bold;">~15 menit</p>
-          <p style="font-size: 0.9rem;">Perkiraan dipanggil: 10:15 WIB</p>
+          <p style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">Estimasi Waktu Tunggu</p>
+          <p style="font-size: 1.8rem; font-weight: bold;">~15 menit</p>
+          <p style="font-size: 0.85rem;">Perkiraan dipanggil: 10:15 WIB</p>
         </div>
         <div>
-          <p style="font-size: 0.9rem; opacity: 0.9;">Poli Tujuan</p>
-          <p style="font-size: 2rem; font-weight: bold;">Poli Umum</p>
-          <p style="font-size: 0.9rem;">dr. Ahmad Fauzi</p>
+          <p style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">Poli Tujuan</p>
+          <p style="font-size: 1.8rem; font-weight: bold;">Poli Umum</p>
+          <p style="font-size: 0.85rem;">dr. Ahmad Fauzi</p>
         </div>
       </div>
       <div style="margin-top: 2rem;">
-        <button class="btn btn-danger" onclick="batalkanAntrean()">❌ Batalkan Antrean</button>
+        <button class="btn btn-danger" onclick="batalkanAntrean()">Batalkan Antrean</button>
       </div>
     </div>
 
     <!-- Status Detail -->
     <div class="card">
-      <h3>📋 Detail Antrean Anda</h3>
+      <h3>Detail Antrean Anda</h3>
       <table>
         <tr>
           <td style="width: 30%; font-weight: 600;">Nomor Antrean</td>
@@ -243,7 +241,7 @@
 
     <!-- Timeline Proses -->
     <div class="card">
-      <h3>🔄 Timeline Proses Antrean</h3>
+      <h3 style="font-size: 1.1rem;">Timeline Proses Antrean</h3>
       <div class="timeline">
         <div class="timeline-item" style="opacity: 1;">
           <h4>✅ Pendaftaran Berhasil</h4>

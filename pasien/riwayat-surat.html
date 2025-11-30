@@ -16,53 +16,140 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.8);
+      background: rgba(0,0,0,0.85);
       z-index: 9999;
       overflow: auto;
+      padding: 20px;
     }
     .pdf-modal-content {
-      background: #fff;
-      margin: 2% auto;
-      width: 90%;
-      max-width: 800px;
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      background: #525659;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 900px;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
     }
     .pdf-modal-header {
-      background: linear-gradient(135deg, #00796b, #004d40);
+      background: #2d2f31;
       color: #fff;
-      padding: 1.5rem;
-      border-radius: 8px 8px 0 0;
+      padding: 1rem 1.5rem;
+      border-radius: 12px 12px 0 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 1px solid #404244;
+    }
+    .pdf-modal-header h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     .pdf-modal-body {
       padding: 2rem;
-      max-height: 70vh;
-      overflow-y: auto;
+      background: #525659;
+      border-radius: 0 0 12px 12px;
+    }
+    .pdf-viewer-container {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .pdf-page-counter {
+      background: #2d2f31;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #404244;
     }
     .pdf-preview {
-      border: 1px solid #e0e0e0;
-      padding: 2rem;
+      padding: 3rem 4rem;
       background: #fff;
       font-family: 'Times New Roman', serif;
       line-height: 1.8;
+      min-height: 600px;
+      max-height: calc(100vh - 350px);
+      overflow-y: auto;
+    }
+    .pdf-preview h2,
+    .pdf-preview h3,
+    .pdf-preview h4 {
+      color: #000;
+      font-weight: bold;
+    }
+    .pdf-preview table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .pdf-preview table td {
+      padding: 0.4rem 0.5rem;
+      vertical-align: top;
+    }
+    .pdf-toolbar {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: #2d2f31;
+      border-radius: 8px;
+    }
+    .pdf-toolbar button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .pdf-toolbar .btn-download {
+      background: #1a73e8;
+      color: #fff;
+    }
+    .pdf-toolbar .btn-download:hover {
+      background: #1557b0;
+      transform: translateY(-2px);
+    }
+    .pdf-toolbar .btn-print {
+      background: #34a853;
+      color: #fff;
+    }
+    .pdf-toolbar .btn-print:hover {
+      background: #2d8e47;
+      transform: translateY(-2px);
+    }
+    .pdf-toolbar .btn-close {
+      background: #5f6368;
+      color: #fff;
+    }
+    .pdf-toolbar .btn-close:hover {
+      background: #4a4d50;
+      transform: translateY(-2px);
     }
     .close-modal {
       background: none;
       border: none;
       color: #fff;
-      font-size: 2rem;
+      font-size: 1.5rem;
       cursor: pointer;
       padding: 0;
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .close-modal:hover {
-      background: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.1);
     }
   </style>
 </head>
@@ -73,6 +160,12 @@
         <img src="../img/Smarthealth-Logo.png" alt="Smart Health Logo" style="height: 45px;">
         <p style="font-size: 0.75rem; margin: 0; color: #5f7a95;">Layanan Digital Puskesmas</p>
       </div>
+
+      <nav style="flex: 1; margin-left: 2rem;">
+        <a href="dashboard.html" style="color: #1a8bd3; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; border-bottom: 2px solid #1a8bd3; padding: 0.5rem 0;">
+          🏠 Dashboard
+        </a>
+      </nav>
       
       <div class="header-right">
         <!-- Notification Bell -->
@@ -204,38 +297,31 @@
     </div>
   </header>
 
-  <nav style=" border-bottom: 1px solid #e0e0e0; padding: 0;">
-    <div class="header-container" style="padding: 0.75rem 2rem;">
-      <div style="display: flex; align-items: center; gap: 2rem;">
-        <a href="dashboard.html" style="color: #2c4964; text-decoration: none; font-weight: 500; padding: 0.5rem 0;">
-          🏠 Dashboard
-        </a>
-      </div>
-    </div>
-  </nav>
-
-
   <main>
     <div class="page-header">
-      <h2>📚 Riwayat Surat</h2>
+      <h2>Riwayat Surat</h2>
       <p>Lihat dan unduh surat yang telah diterbitkan</p>
     </div>
 
     <!-- Statistik -->
     <div class="stats-grid">
       <div class="stat-card">
+        <div class="stat-icon">📊</div>
         <h3>12</h3>
         <p>Total Surat Diterbitkan</p>
       </div>
       <div class="stat-card warning">
+        <div class="stat-icon">⏳</div>
         <h3>2</h3>
         <p>Menunggu Validasi</p>
       </div>
       <div class="stat-card success">
+        <div class="stat-icon">✓</div>
         <h3>10</h3>
         <p>Surat Selesai</p>
       </div>
       <div class="stat-card info">
+        <div class="stat-icon">📅</div>
         <h3>1</h3>
         <p>Surat Bulan Ini</p>
       </div>
@@ -521,17 +607,31 @@
   <div id="pdfModal" class="pdf-modal">
     <div class="pdf-modal-content">
       <div class="pdf-modal-header">
-        <h3 id="pdfTitle">Preview Surat</h3>
+        <h3 id="pdfTitle">
+          <span>📄</span>
+          <span id="pdfTitleText">Preview Surat</span>
+        </h3>
         <button class="close-modal" onclick="closePdfModal()">&times;</button>
       </div>
       <div class="pdf-modal-body">
-        <div id="pdfPreview" class="pdf-preview"></div>
-        <div style="text-align: center; margin-top: 2rem;">
-          <button class="btn btn-primary" onclick="downloadCurrentPdf()" style="padding: 0.75rem 2rem;">
-            📥 Download PDF
+        <div class="pdf-viewer-container">
+          <div class="pdf-page-counter">
+            <span id="pageCounter">Halaman 1/2</span>
+          </div>
+          <div id="pdfPreview" class="pdf-preview"></div>
+        </div>
+        <div class="pdf-toolbar">
+          <button class="btn-download" onclick="downloadCurrentPdf()">
+            <span>📥</span>
+            <span>Download PDF</span>
           </button>
-          <button class="btn btn-secondary" onclick="closePdfModal()" style="padding: 0.75rem 2rem;">
-            ❌ Tutup
+          <button class="btn-print" onclick="printCurrentPdf()">
+            <span>🖨️</span>
+            <span>Print</span>
+          </button>
+          <button class="btn-close" onclick="closePdfModal()">
+            <span>❌</span>
+            <span>Tutup</span>
           </button>
         </div>
       </div>
@@ -716,38 +816,281 @@
         return;
       }
 
+      data.noSurat = noSurat;
+      const today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
       let previewHtml = `
-        <div style="text-align: center; margin-bottom: 2rem;">
-          <h2 style="margin: 0;">PUSKESMAS SMART HEALTH CENTER</h2>
-          <p style="margin: 0.5rem 0;">Jl. Kesehatan No. 1, Bandung - Telp. (022) 1234567</p>
-          <p style="margin: 0;">Email: info@smarthealthcenter.id</p>
-          <hr style="border: 1px solid #000; margin: 1rem 0;">
-        </div>
-        
-        <div style="text-align: center; margin: 2rem 0;">
-          <h3 style="margin: 0;">${data.jenis.toUpperCase()}</h3>
-          <p style="margin: 0.5rem 0;">Nomor: ${data.noSurat}</p>
-        </div>
-        
-        <div style="margin: 2rem 0;">
+        <div style="max-width: 210mm; margin: 0 auto; padding: 2rem; background: #fff;">
+          <!-- Kop Surat -->
+          <div style="text-align: center; border-bottom: 3px double #000; padding-bottom: 1rem; margin-bottom: 2rem;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 0.5rem;">
+              <img src="../img/Smarthealth-Logo.png" alt="Logo" style="height: 60px;">
+              <div style="text-align: left;">
+                <h2 style="margin: 0; font-size: 1.4rem; color: #000;">PUSKESMAS SMART HEALTH CENTER</h2>
+                <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem;">Jl. Kesehatan No. 1, Bandung 40123</p>
+                <p style="margin: 0; font-size: 0.85rem;">Telp: (022) 1234567 | Email: info@smarthealthcenter.id</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Judul Surat -->
+          <div style="text-align: center; margin: 2rem 0 2.5rem 0;">
+            <h3 style="margin: 0; text-decoration: underline; font-size: 1.2rem; letter-spacing: 1px;">${data.jenis.toUpperCase()}</h3>
+            <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem;">Nomor: ${noSurat}</p>
+          </div>
+          
+          <!-- Isi Surat -->
+          <div style="font-size: 1rem; text-align: justify;">
       `;
       
       if (data.jenis === 'Surat Keterangan Sehat') {
         previewHtml += `
-          <p>Yang bertanda tangan di bawah ini, dokter pada Puskesmas Smart Health Center, menerangkan bahwa:</p>
-          <table style="margin: 1rem 0; width: 100%;">
-            <tr><td width="150">Nama</td><td>: ${data.pasien.nama}</td></tr>
-            <tr><td>NIK</td><td>: ${data.pasien.nik}</td></tr>
-            <tr><td>Tempat/Tgl. Lahir</td><td>: ${data.pasien.ttl}</td></tr>
-            <tr><td>Alamat</td><td>: ${data.pasien.alamat}</td></tr>
-            <tr><td>Pekerjaan</td><td>: ${data.pasien.pekerjaan}</td></tr>
-          </table>
-          <h4>Hasil Pemeriksaan:</h4>
-          <table style="margin: 1rem 0; width: 100%;">
-            <tr><td width="150">Tekanan Darah</td><td>: ${data.pemeriksaan.tensiDarah}</td></tr>
-            <tr><td>Nadi</td><td>: ${data.pemeriksaan.nadi}</td></tr>
-            <tr><td>Suhu</td><td>: ${data.pemeriksaan.suhu}</td></tr>
-            <tr><td>Berat Badan</td><td>: ${data.pemeriksaan.beratBadan}</td></tr>
+            <p style="text-indent: 2rem; line-height: 1.8;">
+              Yang bertanda tangan di bawah ini, dokter pada Puskesmas Smart Health Center, 
+              dengan ini menerangkan bahwa:
+            </p>
+            
+            <table style="margin: 1.5rem 0; width: 100%; border: none;">
+              <tr>
+                <td style="width: 35%; padding: 0.4rem 0; border: none;">Nama</td>
+                <td style="width: 5%; border: none;">:</td>
+                <td style="border: none;"><strong>${data.pasien.nama}</strong></td>
+              </tr>
+              <tr>
+                <td style="padding: 0.4rem 0; border: none;">NIK</td>
+                <td style="border: none;">:</td>
+                <td style="border: none;">${data.pasien.nik}</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.4rem 0; border: none;">Tempat/Tanggal Lahir</td>
+                <td style="border: none;">:</td>
+                <td style="border: none;">${data.pasien.ttl}</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.4rem 0; border: none;">Alamat</td>
+                <td style="border: none;">:</td>
+                <td style="border: none;">${data.pasien.alamat}</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.4rem 0; border: none;">Pekerjaan</td>
+                <td style="border: none;">:</td>
+                <td style="border: none;">${data.pasien.pekerjaan}</td>
+              </tr>
+            </table>
+            
+            <p style="text-indent: 2rem; line-height: 1.8; margin-top: 1.5rem;">
+              Telah dilakukan pemeriksaan kesehatan pada tanggal ${data.tanggal} dengan hasil sebagai berikut:
+            </p>
+            
+            <div style="margin: 1.5rem 0; padding: 1rem; background: #f8f9fa; border-radius: 4px;">
+              <table style="width: 100%; border: none;">
+                <tr>
+                  <td style="width: 35%; padding: 0.5rem; border: none;">Tekanan Darah</td>
+                  <td style="width: 5%; border: none;">:</td>
+                  <td style="border: none;"><strong>${data.pemeriksaan.tensiDarah}</strong></td>
+                </tr>
+                <tr>
+                  <td style="padding: 0.5rem; border: none;">Nadi</td>
+                  <td style="border: none;">:</td>
+                  <td style="border: none;"><strong>${data.pemeriksaan.nadi}</strong></td>
+                </tr>
+                <tr>
+                  <td style="padding: 0.5rem; border: none;">Suhu Badan</td>
+                  <td style="border: none;">:</td>
+                  <td style="border: none;"><strong>${data.pemeriksaan.suhu}</strong></td>
+                </tr>
+                <tr>
+                  <td style="padding: 0.5rem; border: none;">Berat Badan</td>
+                  <td style="border: none;">:</td>
+                  <td style="border: none;"><strong>${data.pemeriksaan.beratBadan}</strong></td>
+                </tr>
+                <tr>
+                  <td style="padding: 0.5rem; border: none;">Tinggi Badan</td>
+                  <td style="border: none;">:</td>
+                  <td style="border: none;"><strong>${data.pemeriksaan.tinggiBadan}</strong></td>
+                </tr>
+              </table>
+            </div>
+            
+            <div style="margin: 1.5rem 0; padding: 1rem; background: #e8f5e9; border-left: 4px solid #4caf50; border-radius: 4px;">
+              <p style="margin: 0; font-weight: bold; color: #2e7d32;">KESIMPULAN:</p>
+              <p style="margin: 0.5rem 0 0 0; line-height: 1.8;">${data.hasil}</p>
+            </div>
+            
+            <table style="margin: 1.5rem 0; width: 100%; border: none;">
+              <tr>
+                <td style="width: 35%; padding: 0.4rem 0; border: none;">Keperluan</td>
+                <td style="width: 5%; border: none;">:</td>
+                <td style="border: none;">${data.keperluan}</td>
+              </tr>
+            </table>
+            
+            <p style="text-indent: 2rem; line-height: 1.8; margin-top: 1.5rem;">
+              Demikian surat keterangan sehat ini dibuat dengan sebenarnya berdasarkan hasil 
+              pemeriksaan kesehatan, untuk dapat dipergunakan sebagaimana mestinya.
+            </p>
+        `;
+      } else if (data.jenis === 'Surat Keterangan Sakit') {
+        previewHtml += `
+            <p style="text-indent: 2rem; line-height: 1.8;">
+              Yang bertanda tangan di bawah ini, dokter pada Puskesmas Smart Health Center, 
+              dengan ini menerangkan bahwa:
+            </p>
+            
+            <table style="margin: 1.5rem 0; width: 100%; border: none;">
+              <tr>
+                <td style="width: 35%; padding: 0.4rem 0; border: none;">Nama</td>
+                <td style="width: 5%; border: none;">:</td>
+                <td style="border: none;"><strong>${data.pasien.nama}</strong></td>
+              </tr>
+              <tr>
+                <td style="padding: 0.4rem 0; border: none;">NIK</td>
+                <td style="border: none;">:</td>
+                <td style="border: none;">${data.pasien.nik}</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.4rem 0; border: none;">Tempat/Tanggal Lahir</td>
+                <td style="border: none;">:</td>
+                <td style="border: none;">${data.pasien.ttl}</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.4rem 0; border: none;">Alamat</td>
+                <td style="border: none;">:</td>
+                <td style="border: none;">${data.pasien.alamat}</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.4rem 0; border: none;">Pekerjaan</td>
+                <td style="border: none;">:</td>
+                <td style="border: none;">${data.pasien.pekerjaan}</td>
+              </tr>
+            </table>
+            
+            <p style="text-indent: 2rem; line-height: 1.8; margin-top: 1.5rem;">
+              Setelah dilakukan pemeriksaan kesehatan pada tanggal ${data.mulai}, 
+              yang bersangkutan didiagnosis:
+            </p>
+            
+            <div style="margin: 1rem 0; padding: 1rem; background: #f8f9fa; border-left: 4px solid #00796b; border-radius: 4px;">
+              <p style="margin: 0; font-weight: bold; color: #00796b;">${data.diagnosis}</p>
+            </div>
+            
+            <p style="text-indent: 2rem; line-height: 1.8;">
+              Sehubungan dengan kondisi kesehatan tersebut, yang bersangkutan memerlukan istirahat 
+              selama <strong>${data.lamaSakit}</strong>, terhitung mulai tanggal 
+              <strong>${data.mulai}</strong> sampai dengan <strong>${data.selesai}</strong>.
+            </p>
+            
+            <table style="margin: 1.5rem 0; width: 100%; border: none;">
+              <tr>
+                <td style="width: 35%; padding: 0.4rem 0; border: none;">Keperluan</td>
+                <td style="width: 5%; border: none;">:</td>
+                <td style="border: none;">${data.keperluan}</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.4rem 0; border: none;">Ditujukan kepada</td>
+                <td style="border: none;">:</td>
+                <td style="border: none;">${data.ditujukan}</td>
+              </tr>
+            </table>
+            
+            <p style="text-indent: 2rem; line-height: 1.8; margin-top: 1.5rem;">
+              Demikian surat keterangan ini dibuat dengan sebenarnya untuk dapat dipergunakan 
+              sebagaimana mestinya.
+            </p>
+        `;
+      } else if (data.jenis === 'Surat Rujukan') {
+        previewHtml += `
+            <p style="margin: 0 0 1rem 0;">Kepada Yth.</p>
+            <p style="margin: 0 0 0.5rem 0; font-weight: bold;">${data.bagian}</p>
+            <p style="margin: 0 0 2rem 0; font-weight: bold;">${data.rujukanKe}</p>
+            
+            <p style="text-indent: 2rem; line-height: 1.8;">
+              Dengan hormat, kami rujuk pasien:
+            </p>
+            
+            <table style="margin: 1.5rem 0; width: 100%; border: none;">
+              <tr>
+                <td style="width: 35%; padding: 0.4rem 0; border: none;">Nama</td>
+                <td style="width: 5%; border: none;">:</td>
+                <td style="border: none;"><strong>${data.pasien.nama}</strong></td>
+              </tr>
+              <tr>
+                <td style="padding: 0.4rem 0; border: none;">NIK</td>
+                <td style="border: none;">:</td>
+                <td style="border: none;">${data.pasien.nik}</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.4rem 0; border: none;">Tempat/Tanggal Lahir</td>
+                <td style="border: none;">:</td>
+                <td style="border: none;">${data.pasien.ttl}</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.4rem 0; border: none;">Alamat</td>
+                <td style="border: none;">:</td>
+                <td style="border: none;">${data.pasien.alamat}</td>
+              </tr>
+            </table>
+            
+            <div style="margin: 1.5rem 0; padding: 1rem; background: #fff3cd; border-left: 4px solid #f57c00; border-radius: 4px;">
+              <p style="margin: 0 0 0.5rem 0; font-weight: bold; color: #e65100;">Diagnosis Sementara:</p>
+              <p style="margin: 0;">${data.diagnosaSementara}</p>
+            </div>
+            
+            <table style="margin: 1.5rem 0; width: 100%; border: none;">
+              <tr>
+                <td style="width: 35%; padding: 0.4rem 0; border: none;">Tindakan yang telah dilakukan</td>
+                <td style="width: 5%; border: none;">:</td>
+                <td style="border: none;">${data.tindakan}</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.4rem 0; border: none;">Alasan Rujukan</td>
+                <td style="border: none;">:</td>
+                <td style="border: none;">${data.alasan}</td>
+              </tr>
+            </table>
+            
+            <p style="text-indent: 2rem; line-height: 1.8; margin-top: 1.5rem;">
+              Demikian surat rujukan ini kami sampaikan. Atas perhatian dan kerjasamanya, 
+              kami ucapkan terima kasih.
+            </p>
+        `;
+      }
+      
+      previewHtml += `
+          </div>
+          
+          <!-- Tanda Tangan -->
+          <div style="margin-top: 3rem;">
+            <table style="width: 100%; border: none;">
+              <tr>
+                <td style="width: 50%; border: none;"></td>
+                <td style="text-align: center; border: none;">
+                  <p style="margin: 0;">Bandung, ${data.tanggal}</p>
+                  <p style="margin: 0.5rem 0;">Dokter Pemeriksa,</p>
+                  <div style="height: 60px;"></div>
+                  <p style="margin: 0; font-weight: bold; text-decoration: underline;">${data.dokter}</p>
+                  <p style="margin: 0.25rem 0 0 0;">${data.sip}</p>
+                </td>
+              </tr>
+            </table>
+          </div>
+          
+          <!-- Footer -->
+          <div style="margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #ddd; font-size: 0.75rem; color: #666; text-align: center;">
+            <p style="margin: 0;">Dokumen ini dicetak secara digital oleh Sistem Informasi Puskesmas Smart Health Center</p>
+            <p style="margin: 0.25rem 0 0 0;">Verifikasi dokumen: smarthealthcenter.id/verify/${noSurat}</p>
+          </div>
+        </div>
+      `;
+      
+      currentPdfDoc = generatePDF(data);
+      currentPdfName = noSurat.replace(/\//g, '-') + '.pdf';
+      
+      document.getElementById('pdfTitleText').textContent = data.jenis;
+      document.getElementById('pageCounter').textContent = noSurat + ' | Halaman 1/2';
+      document.getElementById('pdfPreview').innerHTML = previewHtml;
+      document.getElementById('pdfModal').style.display = 'block';
+    }
             <tr><td>Tinggi Badan</td><td>: ${data.pemeriksaan.tinggiBadan}</td></tr>
           </table>
           <h4>Kesimpulan:</h4>
@@ -828,7 +1171,17 @@
     function downloadCurrentPdf() {
       if (currentPdfDoc) {
         currentPdfDoc.save(currentPdfName);
-        alert('✅ Surat berhasil diunduh!');
+        alert('✅ PDF berhasil diunduh: ' + currentPdfName);
+      } else {
+        alert('❌ Tidak ada dokumen untuk diunduh');
+      }
+    }
+
+    function printCurrentPdf() {
+      if (currentPdfDoc) {
+        window.print();
+      } else {
+        alert('❌ Tidak ada dokumen untuk dicetak');
       }
     }
 
@@ -844,6 +1197,13 @@
         closePdfModal();
       }
     }
+
+    // ESC key to close modal
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && document.getElementById('pdfModal').style.display === 'block') {
+        closePdfModal();
+      }
+    });
 
     function filterSurat() {
       const jenis = document.getElementById('filterJenis').value;
