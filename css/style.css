@@ -887,7 +887,7 @@ tbody tr:last-child td {
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 600px;
+  height: 80dvh;
   background: #fff;
   border-radius: 8px;
   overflow: hidden;

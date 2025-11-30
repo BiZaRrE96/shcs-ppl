@@ -430,6 +430,14 @@
       gap: 1.5rem;
       margin-top: 2rem;
     }
+    .announcement-card.see-more {
+      border: 2px dashed #d5e4f0;
+      border-left-color: #1a8bd3;
+      background: linear-gradient(135deg, rgba(26, 139, 211, 0.05), rgba(44, 73, 100, 0.03));
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
     .announcement-card {
       background: white;
       border-radius: 12px;
@@ -499,6 +507,34 @@
       line-height: 1.6;
       font-size: 0.95rem;
       margin-bottom: 1rem;
+    }
+    .see-more-copy {
+      color: #5f7a95;
+      line-height: 1.6;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+    .see-more-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #1a8bd3;
+      color: white;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      width: fit-content;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .see-more-button:hover {
+      background: #2c4964;
+      transform: translateY(-2px);
+    }
+    .see-more-button::after {
+      content: '>';
+      font-weight: 700;
+      font-size: 1rem;
     }
     .announcement-badge {
       display: inline-block;
@@ -640,6 +676,70 @@
       line-height: 1.8;
       font-size: 1rem;
     }
+
+    .pengumuman-banner {
+      background-color: #1a8bd3;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.4rem 3rem;
+      font-size: 0.9rem;
+      min-width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .pengumuman-label {
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    .pengumuman-text-wrapper {
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    /* The clickable text that slides horizontally */
+    .pengumuman-link {
+      display: inline-block;
+      white-space: nowrap;
+      color: #ffffff;
+      text-decoration: none;
+      transform: translateX(0);
+      opacity: 1;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+      cursor: pointer;
+    }
+
+    /* Slide out to the left */
+    .pengumuman-link.is-leaving {
+      transform: translateX(-24px);
+      opacity: 0;
+    }
+
+    /* Initial "enter from right" state (we remove this class to trigger the slide-in) */
+    .pengumuman-link.is-entering {
+      transform: translateX(24px);
+      opacity: 0;
+    }
+
+    .pengumuman-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Optional: tighter on mobile */
+    @media (max-width: 768px) {
+      .pengumuman-banner {
+        padding: 0.4rem 1rem;
+        font-size: 0.8rem;
+      }
+    }
+
+
   </style>
 </head>
 <body>
@@ -653,6 +753,13 @@
         <a href="#pengumuman" class="btn btn-secondary" style="padding: 8px 18px; font-size: 0.9rem;">📢 Pengumuman</a>
         <a href="javascript:void(0)" onclick="loginPasien()" class="btn btn-primary" style="padding: 8px 18px; font-size: 0.9rem;">Login</a>
         <a href="register.html" class="btn btn-secondary" style="padding: 8px 18px; font-size: 0.9rem;">Registrasi</a>
+      </div>
+    </div>
+    <div class="pengumuman-banner">
+      <span class="pengumuman-label">📢 PENGUMUMAN :</span>
+      <div class="pengumuman-text-wrapper" aria-live="polite">
+        <!-- Clickable text, URL will rotate with the message -->
+        <a class="pengumuman-link" href="#pengumuman" target="_self" rel="noopener"></a>
       </div>
     </div>
   </header>
@@ -877,6 +984,20 @@
           </div>
           <div class="announcement-date">27 November 2025</div>
         </div>
+
+        <!-- Lihat Pengumuman Lainnya -->
+        <div class="announcement-card see-more">
+          <div class="announcement-icon">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="34" stroke="#1a8bd3" stroke-width="3" opacity="0.25"/>
+              <path d="M 40 50 L 60 50 M 50 40 L 50 60" stroke="#1a8bd3" stroke-width="4" stroke-linecap="round"/>
+              <path d="M 35 70 C 40 63 60 63 65 70" stroke="#2c4964" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+            </svg>
+          </div>
+          <h3 class="announcement-title">Pengumuman Lainnya</h3>
+          <p class="see-more-copy">Butuh melihat pengumuman lama atau informasi lain? Temukan arsip lengkapnya di sini.</p>
+          <a class="see-more-button" href="#arsip-pengumuman" aria-label="Lihat arsip pengumuman">Lihat pengumuman lainnya</a>
+        </div>
       </div>
     </section>
 
@@ -1001,6 +1122,85 @@
         return 'Maaf, saya belum memahami pertanyaan Anda. Silakan hubungi kami di (021) 1234-5678 atau email info@smarthealthcenter.id untuk bantuan lebih lanjut.';
       }
     }
+
+        // === Pengumuman Banner Rotator (horizontal slide + rotating links) ===
+    const pengumumanItems = [
+      {
+        text: 'Jam operasional: Senin–Jumat 08.00–16.00, Sabtu 08.00–13.00 (Minggu & libur tutup).',
+        url: '#pengumuman' // section on the same page
+      },
+      {
+        text: 'Libur Nasional 1 Desember 2025: layanan puskesmas TIDAK beroperasi.',
+        url: '#pengumuman'
+      },
+      {
+        text: 'Program vaksinasi influenza gratis untuk lansia (60+) setiap Rabu, 09.00–12.00.',
+        url: '#pengumuman'
+      },
+      {
+        text: 'Pemeliharaan sistem pendaftaran online 30 November 2025, pukul 22.00–24.00 WIB.',
+        url: '#pengumuman'
+      }
+    ];
+
+    (function initPengumumanBanner() {
+      const linkEl = document.querySelector('.pengumuman-link');
+      if (!linkEl || pengumumanItems.length === 0) return;
+
+      let index = 0;
+
+      function applyItem(i) {
+        const item = pengumumanItems[i];
+        linkEl.textContent = item.text;
+        linkEl.href = item.url || '#';
+        linkEl.target = item.url && item.url.startsWith('http')
+          ? '_blank'
+          : '_self';
+
+        // If no URL, make it look non-clickable
+        linkEl.style.pointerEvents = item.url ? 'auto' : 'none';
+      }
+
+      // Set initial item
+      applyItem(index);
+
+      function showNextItem() {
+        // Slide current text out to the left
+        linkEl.classList.add('is-leaving');
+
+        setTimeout(() => {
+          // Move to next item
+          index = (index + 1) % pengumumanItems.length;
+
+          // Prepare "enter from right" state
+          linkEl.classList.remove('is-leaving');
+          linkEl.classList.add('is-entering');
+
+          // Update text + link
+          applyItem(index);
+
+          // Force reflow so the browser recognizes the starting state
+          void linkEl.offsetWidth;
+
+          // Remove entering class to trigger slide-in to center
+          linkEl.classList.remove('is-entering');
+        }, 350); // match CSS transition duration
+      }
+
+      // Auto-rotate every 5 seconds
+      setInterval(showNextItem, 5000);
+
+      // OPTIONAL: also rotate when clicking (without navigation)
+      // If you want this behavior, uncomment the lines below:
+      /*
+      linkEl.addEventListener('click', function(e) {
+        e.preventDefault(); // prevent navigation
+        showNextItem();
+      });
+      */
+    })();
+
+
   </script>
 
   <footer>
