@@ -19,10 +19,21 @@ function toggleUserDropdown() {
   notifDropdown.classList.remove('show');
 }
 
+// Close all nav dropdowns except the provided one
+function closeNavDropdowns(exceptDropdown) {
+  document.querySelectorAll('.nav-dropdown.open').forEach(dropdown => {
+    if (dropdown === exceptDropdown) return;
+    dropdown.classList.remove('open');
+    const toggleBtn = dropdown.querySelector('.dropdown-toggle');
+    if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+  });
+}
+
 // Close dropdowns when clicking outside
 document.addEventListener('click', function(event) {
   const notifBell = document.querySelector('.notification-bell');
   const userProfile = document.getElementById('userProfile');
+  const navDropdown = event.target.closest('.nav-dropdown');
   
   if (notifBell && !notifBell.contains(event.target)) {
     const notifDropdown = document.getElementById('notificationDropdown');
@@ -33,6 +44,11 @@ document.addEventListener('click', function(event) {
     const userDropdown = document.getElementById('userDropdown');
     if (userDropdown) userDropdown.classList.remove('show');
     userProfile.classList.remove('active');
+  }
+
+  // Close nav dropdowns when clicking outside any nav dropdown
+  if (!navDropdown) {
+    closeNavDropdowns();
   }
 });
 
@@ -50,4 +66,25 @@ window.addEventListener('load', function() {
   const initials = username.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
   const avatarEl = document.querySelector('.user-avatar');
   if (avatarEl) avatarEl.textContent = initials;
+
+  // Enable nav dropdown toggle via click
+  const navDropdownToggles = document.querySelectorAll('.nav-dropdown .dropdown-toggle');
+  navDropdownToggles.forEach(toggleBtn => {
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    toggleBtn.addEventListener('click', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      const parentDropdown = toggleBtn.closest('.nav-dropdown');
+      if (!parentDropdown) return;
+      const isOpen = parentDropdown.classList.contains('open');
+      if (isOpen) {
+        parentDropdown.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        return;
+      }
+      closeNavDropdowns(parentDropdown);
+      parentDropdown.classList.add('open');
+      toggleBtn.setAttribute('aria-expanded', 'true');
+    });
+  });
 });
